@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>我的导航站</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system;
+      background: #f5f6fa;
+      margin: 0;
+      padding: 40px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+    }
+    a {
+      display: block;
+      padding: 16px;
+      background: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #333;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    a:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <h1>🚀 我的导航站</h1>
+  <div class="grid">
+    <a href="https://github.com" target="_blank">GitHub</a>
+    <a href="https://chat.openai.com" target="_blank">ChatGPT</a>
+    <a href="https://www.google.com" target="_blank">Google</a>
+    <a href="https://www.aliyun.com" target="_blank">阿里云</a>
+  </div>
+</body>
+</html>
