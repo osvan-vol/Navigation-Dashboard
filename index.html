@@ -7,14 +7,15 @@
 
 <style>
 :root{
-  --cream: #fafaf7;        /* 奶白 */
-  --mint: #f2f8f4;         /* 奶绿 */
+  /* === 核心配色 === */
+  --cream: #FCFBF7;   /* 奶白（暖） */
+  --mint:  #F2F8F4;   /* 奶绿 */
   --panel: #ffffff;
-  --border: #e6e8ec;
-  --text: #111827;
+  --border:#E7E5DF;
+  --text:  #111827;
   --muted: #6b7280;
-  --accent: #4f46e5;
-  --radius: 14px;
+  --accent:#4F6CFF;
+  --radius:14px;
 }
 
 *{ box-sizing:border-box }
@@ -23,16 +24,21 @@ body{
   margin:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",
   Roboto,Helvetica,Arial,sans-serif;
-  background: var(--mint);
-  color: var(--text);
+  background:var(--mint);
+  color:var(--text);
 }
 
-/* ===== 顶部奶白层 ===== */
+/* ===== 顶部：奶白层 ===== */
 header{
   background:
-    radial-gradient(700px 260px at 50% 120px, #e6ebff, transparent),
+    radial-gradient(
+      720px 260px at 50% 120px,
+      rgba(255,248,230,.9),
+      transparent
+    ),
     var(--cream);
   border-bottom:1px solid var(--border);
+  box-shadow:0 8px 30px rgba(0,0,0,.03);
 }
 
 .header-inner{
@@ -51,13 +57,14 @@ header{
   width:9px;
   height:9px;
   border-radius:50%;
-  background:#4f6cff;
+  background:var(--accent);
 }
 
 h1{
   margin:0;
   font-size:30px;
   font-weight:700;
+  letter-spacing:-.02em;
 }
 
 .subtitle{
@@ -85,23 +92,23 @@ h1{
 .search input{
   width:100%;
   padding:16px 18px 16px 44px;
-  border-radius:16px;
+  border-radius:18px;
   border:1px solid var(--border);
   font-size:15px;
   outline:none;
   background:#fff;
   box-shadow:
-    0 20px 40px rgba(79,70,229,.18),
-    inset 0 0 0 1px rgba(79,70,229,.08);
+    0 22px 44px rgba(79,108,255,.18),
+    inset 0 0 0 1px rgba(79,108,255,.08);
 }
 
-/* ===== 下方奶绿内容层 ===== */
+/* ===== 下方：奶绿内容层 ===== */
 main{
   max-width:1100px;
   margin:auto;
-  padding:48px 24px 32px;
+  padding:52px 24px 32px;
   display:grid;
-  gap:42px;
+  gap:44px;
 }
 
 section h2{
@@ -180,7 +187,7 @@ footer{
       <span class="dot"></span>
       <h1>导航</h1>
     </div>
-    <div class="subtitle">工具 · 部署 · 解码 · 检测</div>
+    <div class="subtitle">工具 · 部署 · 解码 · 检测 · 监控</div>
 
     <div class="search">
       <input id="search" placeholder="搜索 · GitHub / 部署 / 解码 / DNS…" />
@@ -237,15 +244,18 @@ footer{
 <script>
 const search=document.getElementById("search");
 const cards=[...document.querySelectorAll(".card")];
+
 search.addEventListener("input",e=>{
   const v=e.target.value.toLowerCase();
   cards.forEach(c=>{
     c.style.display=c.dataset.name.includes(v)?"":"none";
   });
 });
+
 document.addEventListener("keydown",e=>{
   if(e.key==="/" && document.activeElement!==search){
-    e.preventDefault();search.focus();
+    e.preventDefault();
+    search.focus();
   }
 });
 </script>
