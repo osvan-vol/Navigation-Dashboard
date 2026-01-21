@@ -37,25 +37,56 @@ header{
   background:var(--cream);
   padding:56px 24px 72px;
 }
-.header{max-width:1100px;margin:auto}
-.top{display:flex;justify-content:space-between;align-items:center}
-h1{font-size:32px;margin:0}
-.sub{color:var(--muted);margin:12px 0 24px}
+.header{
+  max-width:1100px;
+  margin:auto;
+}
 
-.search{position:relative}
+.top{
+  display:flex;
+  align-items:center;
+  gap:24px;
+}
+
+h1{
+  font-size:32px;
+  margin:0;
+  white-space:nowrap;
+}
+
+.sub{
+  color:var(--muted);
+  margin:12px 0 0;
+}
+
+/* ===== Search ===== */
+.search{
+  position:relative;
+  flex:1;
+  max-width:520px;
+}
+
 .search::before{
   content:"/";
   position:absolute;
-  left:16px;top:50%;
+  left:16px;
+  top:50%;
   transform:translateY(-50%);
   color:#9CA3AF;
 }
+
 .search input{
-  width:360px;
-  max-width:100%;
+  width:100%;
   padding:14px 16px 14px 40px;
   border-radius:999px;
   border:1px solid var(--border);
+  background:var(--panel);
+}
+
+.search input:focus{
+  outline:none;
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(79,108,255,.15);
 }
 
 /* ===== Main ===== */
@@ -119,7 +150,11 @@ h2{font-size:14px;color:#6366F1;margin-bottom:16px}
 .meta strong{display:block}
 .meta span{font-size:13px;color:var(--muted)}
 
-footer{text-align:center;color:var(--muted);font-size:13px}
+footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+}
 </style>
 </head>
 
@@ -129,12 +164,15 @@ footer{text-align:center;color:var(--muted);font-size:13px}
   <div class="header">
     <div class="top">
       <h1>导航</h1>
+
+      <div class="search">
+        <input id="search" placeholder="搜索站点…" />
+      </div>
+
       <div id="theme" style="cursor:pointer">🌙</div>
     </div>
+
     <div class="sub">部署 · 监控 · 解码 · 域名 · AI</div>
-    <div class="search">
-      <input id="search" placeholder="搜索站点…" />
-    </div>
   </div>
 </header>
 
