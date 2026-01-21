@@ -32,7 +32,7 @@ body{
   color:var(--text);
 }
 
-/* ===== 顶部 ===== */
+/* ===== Header ===== */
 header{
   background:var(--cream);
   padding:56px 24px 72px;
@@ -58,7 +58,7 @@ h1{font-size:32px;margin:0}
   border:1px solid var(--border);
 }
 
-/* ===== 主体 ===== */
+/* ===== Main ===== */
 main{
   max-width:1100px;
   margin:-48px auto 80px;
@@ -87,6 +87,7 @@ h2{font-size:14px;color:#6366F1;margin-bottom:16px}
 }
 .card:hover{transform:translateY(-3px)}
 
+/* ===== Icon (兜底核心) ===== */
 .icon{
   width:44px;
   height:44px;
@@ -95,31 +96,29 @@ h2{font-size:14px;color:#6366F1;margin-bottom:16px}
   display:flex;
   align-items:center;
   justify-content:center;
-  font-weight:600;
-  color:var(--accent);
   position:relative;
+  flex-shrink:0;
 }
-[data-theme="dark"] .icon{
-  background:#020617;
-}
+[data-theme="dark"] .icon{background:#020617}
 
-/* === icon 兜底核心 === */
+/* fallback 字母（仅无图标时显示） */
 .icon::after{
   content:attr(data-fallback);
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  font-weight:600;
   font-size:16px;
-  opacity:.9;
+  color:var(--accent);
 }
+
+/* 有图标时，彻底隐藏 fallback */
+.icon.has-img::after{display:none}
+
 .icon img{
   width:22px;
   height:22px;
-  z-index:1;
+  display:block;
 }
 
+/* ===== Meta ===== */
 .meta strong{display:block}
 .meta span{font-size:13px;color:var(--muted)}
 
@@ -195,24 +194,29 @@ function makeCard(d){
   const c=document.createElement("div");
   c.className="card";
   const letter=d.name[0].toUpperCase();
+  const hasIcon=!!d.icon;
+
   c.innerHTML=`
-    <div class="icon" data-fallback="${letter}">
-      ${d.icon?`<img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/${d.icon}.svg" onerror="this.remove()">`:""}
+    <div class="icon ${hasIcon?'has-img':''}" data-fallback="${letter}">
+      ${hasIcon?`<img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/${d.icon}.svg" onerror="this.parentNode.classList.remove('has-img');this.remove()">`:""}
     </div>
     <div class="meta"><strong>${d.name}</strong><span>${d.desc}</span></div>
     <div class="star ${pinned.includes(d.id)?"active":""}">★</div>
   `;
+
   c.onclick=()=>{
     recent=[d.id,...recent.filter(x=>x!==d.id)].slice(0,6);
     localStorage.setItem("recent",JSON.stringify(recent));
     window.open(d.url,"_blank");
   };
+
   c.querySelector(".star").onclick=e=>{
     e.stopPropagation();
     pinned.includes(d.id)?pinned.splice(pinned.indexOf(d.id),1):pinned.push(d.id);
     localStorage.setItem("pinned",JSON.stringify(pinned));
     render();
   };
+
   return c;
 }
 
@@ -220,14 +224,17 @@ function render(){
   content.innerHTML="";
   document.querySelector("#pinned .grid").innerHTML="";
   document.querySelector("#recent .grid").innerHTML="";
+
   pinned.forEach(id=>{
     const d=data.find(x=>x.id===id);
     d&&document.querySelector("#pinned .grid").append(makeCard(d));
   });
+
   recent.forEach(id=>{
     const d=data.find(x=>x.id===id);
     d&&document.querySelector("#recent .grid").append(makeCard(d));
   });
+
   [...new Set(data.map(d=>d.cat))].forEach(cat=>{
     const s=document.createElement("section");
     s.innerHTML=`<h2>${cat}</h2><div class="grid"></div>`;
