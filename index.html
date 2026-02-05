@@ -90,6 +90,14 @@ main {
   margin: 0 auto;
   padding: 32px 24px 40px;
 }
+.intro {
+  max-width: 1200px;
+  margin: 0 auto 16px;
+  padding: 0 24px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
 details {
   background: var(--card);
   border: 1px solid var(--border);
@@ -173,14 +181,14 @@ details[open] summary { color: var(--primary); }
       <div class="hint">⌘K</div>
     </div>
   </div>
-  <!-- 简介文字 -->
-  <div style="max-width:1200px; margin:0 auto; padding:0 24px 16px; color:var(--muted); font-size:14px;">
-    聚合 AI 平台 / 部署平台 / 监控 / 解码 / 域名管理 / 论坛 等导航工具
-  </div>
 </header>
 
-  
 <main>
+  <!-- 简介文字 -->
+  <div class="intro">
+    聚合 AI 平台 / 部署平台 / 监控 / 解码 / 域名管理 / 论坛 等导航工具
+  </div>
+
   <!-- 论坛 -->
   <details>
     <summary>论坛</summary>
