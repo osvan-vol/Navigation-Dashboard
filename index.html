@@ -1,356 +1,334 @@
-<!DOCTYPE html>  
-<html lang="zh-CN">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>导航网页 - 可折叠分类</title>  
-<style>  
-:root{  
-  --bg:#f5f9f4;  
-  --card:#ffffff;  
-  --border:#e6ebf0;  
-  --text:#0f172a;  
-  --muted:#64748b;  
-  --primary:#6366f1;  
-  --radius:16px;  
-}  
-*{box-sizing:border-box}  
-body{  
-  margin:0;  
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;  
-  background:var(--bg);  
-  color:var(--text);  
-}  
-header{  
-  position:sticky;  
-  top:0;  
-  z-index:50;  
-  backdrop-filter:blur(12px);  
-  background:rgba(245,249,244,.9);  
-  border-bottom:1px solid var(--border);  
-}  
-.header-inner{  
-  max-width:1200px;  
-  margin:0 auto;  
-  padding:16px 24px;  
-  display:flex;  
-  align-items:center;  
-  gap:16px;  
-  flex-wrap:wrap;  
-}  
-.logo{font-size:20px;font-weight:600;white-space:nowrap}  
-.search{  
-  flex:1;  
-  position:relative;  
-  min-width:200px;  
-}  
-.search input{  
-  width:100%;  
-  height:40px;  
-  padding:0 44px 0 16px;  
-  border-radius:12px;  
-  border:1px solid var(--border);  
-  font-size:14px;  
-  transition:border-color 0.2s;  
-}  
-.search input:focus{  
-  outline:none;  
-  border-color:var(--primary);  
-  box-shadow:0 0 0 3px rgba(99,102,241,0.1);  
-}  
-.search .hint{  
-  position:absolute;  
-  right:12px;  
-  top:50%;  
-  transform:translateY(-50%);  
-  font-size:12px;  
-  color:var(--muted);  
-  background:#f1f5f9;  
-  border-radius:6px;  
-  padding:2px 6px;  
-  pointer-events:none;  
-}  
-.search .clear{  
-  position:absolute;  
-  right:50px;  
-  top:50%;  
-  transform:translateY(-50%);  
-  cursor:pointer;  
-  color:var(--muted);  
-  font-size:18px;  
-  display:none;  
-  background:none;  
-  border:none;  
-  padding:0;  
-}  
-.search input:not(:placeholder-shown) ~ .clear{  
-  display:block;  
-}  
-main{  
-  max-width:1200px;  
-  margin:0 auto;  
-  padding:32px 24px 40px;  
-}  
-details{  
-  background:var(--card);  
-  border:1px solid var(--border);  
-  border-radius:var(--radius);  
-  padding:16px;  
-  margin-bottom:16px;  
-}  
-summary{  
-  font-weight:600;  
-  font-size:16px;  
-  cursor:pointer;  
-  outline:none;  
-  user-select:none;  
-}  
-details[open] summary{  
-  color:var(--primary);  
-}  
-.grid{  
-  display:grid;  
-  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));  
-  gap:16px;  
-  margin-top:12px;  
-}  
-.card{  
-  background:var(--card);  
-  border:1px solid var(--border);  
-  border-radius:var(--radius);  
-  padding:18px 20px;  
-  display:flex;  
-  align-items:center;  
-  gap:14px;  
-  text-decoration:none;  
-  color:inherit;  
-  transition:.15s ease;  
-}  
-.card:hover{  
-  transform:translateY(-2px);  
-  box-shadow:0 6px 20px rgba(15,23,42,.08);  
-}  
-.card.hidden{  
-  display:none;  
-}  
-.icon{  
-  width:40px;  
-  height:40px;  
-  border-radius:12px;  
-  background:#f1f5f9;  
-  display:flex;  
-  align-items:center;  
-  justify-content:center;  
-  font-weight:600;  
-  color:var(--primary);  
-  overflow:hidden;  
-  flex-shrink:0;  
-  font-size:14px;  
-}  
-.icon img{  
-  width:70%;  
-  height:70%;  
-  object-fit:contain;  
-}  
-.title{font-weight:600;font-size:15px}  
-.desc{font-size:13px;color:var(--muted)}  
-.no-results{  
-  text-align:center;  
-  padding:40px 20px;  
-  color:var(--muted);  
-}  
-@media(max-width:640px){  
-  .header-inner{  
-    flex-direction:column;  
-    gap:12px;  
-  }  
-  .search{  
-    width:100%;  
-    min-width:auto;  
-  }  
-  .grid{  
-    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));  
-  }  
-  main{  
-    padding:16px 12px 24px;  
-  }  
-}  
-</style>  
-</head>  
-<body>  
-<header>  
-  <div class="header-inner">  
-    <div class="logo">导航</div>  
-    <div class="search">  
-      <input id="searchInput" placeholder="搜索站点…" autocomplete="off" />  
-      <button class="clear" id="clearBtn">✕</button>  
-      <div class="hint">⌘K</div>  
-    </div>  
-  </div>  
-</header>  
-<main>  
-<!-- 论坛 -->
-<details>
-  <summary>论坛</summary>
-  <div class="grid">
-    <a class="card" href="https://linux.do/" target="_blank">
-      <div class="icon">L</div>
-      <div>
-        <div class="title">linux.do</div>
-        <div class="desc">论坛</div>
-      </div>
-    </a>
-    <a class="card" href="https://www.nodeloc.com/" target="_blank">
-      <div class="icon">N</div>
-      <div>
-        <div class="title">nodeloc</div>
-        <div class="desc">论坛</div>
-      </div>
-    </a>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>导航工具栏</title>
+<style>
+:root {
+  --bg: #f5f9f4;
+  --card: #ffffff;
+  --border: #e6ebf0;
+  --text: #0f172a;
+  --muted: #64748b;
+  --primary: #6366f1;
+  --radius: 16px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial;
+  background: var(--bg);
+  color: var(--text);
+}
+header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+  background: rgba(245,249,244,.9);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.logo { font-size: 20px; font-weight: 600; white-space: nowrap; }
+.search {
+  flex: 1;
+  position: relative;
+  min-width: 200px;
+}
+.search input {
+  width: 100%;
+  height: 40px;
+  padding: 0 44px 0 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+.search input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99,102,241,.1);
+}
+.search .hint {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--muted);
+  background: #f1f5f9;
+  border-radius: 6px;
+  padding: 2px 6px;
+  pointer-events: none;
+}
+.search .clear {
+  position: absolute;
+  right: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 18px;
+  display: none;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.search input:not(:placeholder-shown) ~ .clear { display: block; }
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 40px;
+}
+details {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+summary {
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+details[open] summary { color: var(--primary); }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(240px,1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: .15s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(15,23,42,.08);
+}
+.card.hidden { display: none; }
+
+.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: var(--primary);
+  overflow: hidden;
+  flex-shrink: 0;
+  font-size: 14px;
+}
+.icon img { width: 70%; height: 70%; object-fit: contain; }
+
+.title { font-weight: 600; font-size: 15px; }
+.desc { font-size: 13px; color: var(--muted); }
+
+.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--muted);
+}
+
+@media(max-width:640px){
+  .header-inner { flex-direction: column; gap: 12px; }
+  .search { width: 100%; min-width: auto; }
+  .grid { grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); }
+  main { padding: 16px 12px 24px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">导航</div>
+    <div class="search">
+      <input id="searchInput" placeholder="搜索站点…" autocomplete="off" />
+      <button class="clear" id="clearBtn">✕</button>
+      <div class="hint">⌘K</div>
+    </div>
   </div>
-</details>
-  
-<!-- AI -->  
-<details open>  
-  <summary>AI 平台</summary>  
-  <div class="grid">  
-    <a class="card" href="https://chat.openai.com" target="_blank"><div class="icon">C</div><div><div class="title">ChatGPT</div><div class="desc">OpenAI</div></div></a>  
-    <a class="card" href="https://gemini.google.com" target="_blank"><div class="icon">G</div><div><div class="title">Gemini</div><div class="desc">Google</div></div></a>  
-    <a class="card" href="https://www.deepseek.com" target="_blank"><div class="icon">D</div><div><div class="title">DeepSeek</div><div class="desc">模型平台</div></div></a>  
-  </div>  
-</details>  
-<!-- 部署 -->  
-<details>  
-  <summary>部署 / 平台</summary>  
-  <div class="grid">  
-    <a class="card" href="https://github.com" target="_blank"><div class="icon">GH</div><div><div class="title">GitHub</div><div class="desc">代码托管</div></div></a>  
-    <a class="card" href="https://dash.cloudflare.com" target="_blank"><div class="icon">CF</div><div><div class="title">Cloudflare</div><div class="desc">CDN / 部署</div></div></a>  
-    <a class="card" href="https://dashboard.render.com/login" target="_blank"><div class="icon">R</div><div><div class="title">Render</div><div class="desc">应用部署</div></div></a>  
-    <a class="card" href="https://signin.koyeb.com" target="_blank"><div class="icon">K</div><div><div class="title">Koyeb</div><div class="desc">应用部署</div></div></a>  
-    <a class="card" href="https://zeabur.app" target="_blank"><div class="icon">Z</div><div><div class="title">Zeabur</div><div class="desc">应用部署</div></div></a>  
-    <a class="card" href="https://run.claw.cloud" target="_blank"><div class="icon">C</div><div><div class="title">ClawCloud</div><div class="desc">应用部署</div></div></a>  
-    <a class="card" href="https://leaflow.net/login" target="_blank"><div class="icon">L</div><div><div class="title">Leaflow</div><div class="desc">应用部署</div></div></a>  
-    <a class="card" href="https://huggingface.co/login" target="_blank"><div class="icon">H</div><div><div class="title">Hugging Face</div><div class="desc">应用部署</div></div></a>  
-    <a class="card" href="https://www.sap.com/products/technology-platform/trial.html" target="_blank"><div class="icon">S</div><div><div class="title">SAP</div><div class="desc">应用部署</div></div></a>  
-  </div>  
-</details>  
-<!-- 工具 -->  
-<details>  
-  <summary>监控 / 解码 / 检测</summary>  
-  <div class="grid">  
-    <a class="card" href="https://ayo.94v.net/status/sub" target="_blank"><div class="icon">U</div><div><div class="title">Uptime Kuma</div><div class="desc">服务监控</div></div></a>  
-    <a class="card" href="https://www.cloudflare.com/cdn-cgi/trace" target="_blank"><div class="icon">CF</div><div><div class="title">CF Trace</div><div class="desc">网络检测</div></div></a>  
-    <a class="card" href="https://ippure.com" target="_blank"><div class="icon">I</div><div><div class="title">IPPure</div><div class="desc">IP 查询</div></div></a>  
-    <a class="card" href="https://scamalytics.com" target="_blank"><div class="icon">S</div><div><div class="title">Scamalytics</div><div class="desc">风险分析</div></div></a>  
-    <a class="card" href="https://dnschecker.org" target="_blank"><div class="icon">D</div><div><div class="title">DNSChecker</div><div class="desc">DNS 检测</div></div></a>  
-    <a class="card" href="https://proxyip.chatkg.qzz.io" target="_blank"><div class="icon">P</div><div><div class="title">ProxyIP</div><div class="desc">代理检测</div></div></a>  
-    <a class="card" href="https://www.base64decode.org/zh/" target="_blank"><div class="icon">B</div><div><div class="title">Base64 Decode</div><div class="desc">编码解码</div></div></a>  
-    <a class="card" href="https://obfuscator.io/legacy-playground" target="_blank"><div class="icon">JS</div><div><div class="title">Obfuscator</div><div class="desc">JS 混淆</div></div></a>  
-  </div>  
-</details>  
-<!-- DNS -->  
-<details>  
-  <summary>域名 / DNS</summary>  
-  <div class="grid">  
-    <a class="card" href="https://dnshe.com" target="_blank"><div class="icon">D</div><div><div class="title">DNSHe</div><div class="desc">域名</div></div></a>  
-    <a class="card" href="https://gv.uy" target="_blank"><div class="icon">G</div><div><div class="title">GV.UY</div><div class="desc">域名</div></div></a>  
-    <a class="card" href="https://dash.domain.digitalplat.org/auth/login?next=%2F" target="_blank"><div class="icon">D</div><div><div class="title">Digital</div><div class="desc">域名</div></div></a>  
-    <a class="card" href="https://www.l53.net" target="_blank"><div class="icon">L</div><div><div class="title">L53</div><div class="desc">域名</div></div></a>  
-    <a class="card" href="https://store.9v4.com/" target="_blank"><div class="icon">94V</div><div><div class="title">94V</div><div class="desc">域名</div></div></a>  
-  </div>  
-</details>  
-<div class="no-results" id="noResults" style="display:none;">  
-  没有找到匹配的站点  
-</div>  
-</main>  
-<script>  
-const searchInput = document.getElementById('searchInput');  
-const clearBtn = document.getElementById('clearBtn');  
-const cards = document.querySelectorAll('.card');  
-const noResults = document.getElementById('noResults');  
-const details = document.querySelectorAll('details');  
-// 快捷键：⌘K 或 Ctrl+K 聚焦搜索框  
-document.addEventListener('keydown', (e) => {  
-  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {  
-    e.preventDefault();  
-    searchInput.focus();  
-  }  
-  // ESC 清除搜索  
-  if (e.key === 'Escape' && searchInput.value) {  
-    searchInput.value = '';  
-    performSearch();  
-    searchInput.focus();  
-  }  
-});  
-// 清除按钮  
-clearBtn.addEventListener('click', () => {  
-  searchInput.value = '';  
-  performSearch();  
-  searchInput.focus();  
-});  
-// 搜索功能  
-searchInput.addEventListener('input', performSearch);  
-function performSearch() {  
-  const query = searchInput.value.trim().toLowerCase();  
-  let visibleCount = 0;  
-  let visibleDetails = new Set();  
-  cards.forEach(card => {  
-    const text = card.innerText.toLowerCase();  
-    const isMatch = !query || text.includes(query);  
-      
-    if (isMatch) {  
-      card.classList.remove('hidden');  
-      visibleCount++;  
-      // 记录包含匹配卡片的 details  
-      const detail = card.closest('details');  
-      if (detail) visibleDetails.add(detail);  
-    } else {  
-      card.classList.add('hidden');  
-    }  
-  });  
-  // 只显示包含匹配卡片的 details  
-  details.forEach(detail => {  
-    if (query && !visibleDetails.has(detail)) {  
-      detail.style.display = 'none';  
-    } else {  
-      detail.style.display = '';  
-    }  
-  });  
-  // 显示/隐藏 "没有结果" 提示  
-  noResults.style.display = (query && visibleCount === 0) ? 'block' : 'none';  
-}  
-// Favicon 自动加载  
-document.querySelectorAll('.icon').forEach(icon => {  
-  const link = icon.closest('a');  
-  if (!link) return;  
-    
-  let url;  
-  try {  
-    const u = new URL(link.href);  
-    url = u.origin + '/favicon.ico';  
-  } catch {   
-    return;   
-  }  
-  const img = document.createElement('img');  
-  img.src = url;  
-  img.alt = '';  
-    
-  // 设置超时：3秒内没加载成功就放弃  
-  const timeout = setTimeout(() => {  
-    // 加载失败，保持原来的文字  
-  }, 3000);  
-    
-  img.onload = () => {  
-    clearTimeout(timeout);  
-    icon.textContent = '';  
-    icon.appendChild(img);  
-  };  
-    
-  img.onerror = () => {  
-    clearTimeout(timeout);  
-    // 加载失败，保持原来的文字  
-  };  
-});  
-</script>  
-</body>  
-</html>  
+</header>
+
+<main>
+  <!-- 论坛 -->
+  <details>
+    <summary>论坛</summary>
+    <div class="grid">
+      <a class="card" href="https://linux.do/" target="_blank">
+        <div class="icon">L</div>
+        <div><div class="title">linux.do</div><div class="desc">论坛</div></div>
+      </a>
+      <a class="card" href="https://www.nodeloc.com/" target="_blank">
+        <div class="icon">N</div>
+        <div><div class="title">nodeloc</div><div class="desc">论坛</div></div>
+      </a>
+      <a class="card" href="https://ygkkk.blogspot.com/" target="_blank">
+        <div class="icon">L</div>
+        <div><div class="title">甬哥侃侃侃</div><div class="desc">论坛</div></div>
+      </a>
+    </div>
+  </details>
+
+  <!-- AI -->
+  <details>
+    <summary>AI 平台</summary>
+    <div class="grid">
+      <a class="card" href="https://chat.openai.com" target="_blank">
+        <div class="icon">C</div>
+        <div><div class="title">ChatGPT</div><div class="desc">OpenAI</div></div>
+      </a>
+      <a class="card" href="https://gemini.google.com" target="_blank">
+        <div class="icon">G</div>
+        <div><div class="title">Gemini</div><div class="desc">Google</div></div>
+      </a>
+      <a class="card" href="https://www.deepseek.com" target="_blank">
+        <div class="icon">D</div>
+        <div><div class="title">DeepSeek</div><div class="desc">模型平台</div></div>
+      </a>
+    </div>
+  </details>
+
+  <!-- 部署 / 平台 -->
+  <details>
+    <summary>部署 / 平台</summary>
+    <div class="grid">
+      <a class="card" href="https://github.com" target="_blank"><div class="icon">GH</div><div><div class="title">GitHub</div><div class="desc">代码托管</div></div></a>
+      <a class="card" href="https://dash.cloudflare.com" target="_blank"><div class="icon">CF</div><div><div class="title">Cloudflare</div><div class="desc">CDN / 部署</div></div></a>
+      <a class="card" href="https://dashboard.render.com/login" target="_blank"><div class="icon">R</div><div><div class="title">Render</div><div class="desc">应用部署</div></div></a>
+      <a class="card" href="https://signin.koyeb.com" target="_blank"><div class="icon">K</div><div><div class="title">Koyeb</div><div class="desc">应用部署</div></div></a>
+      <a class="card" href="https://zeabur.app" target="_blank"><div class="icon">Z</div><div><div class="title">Zeabur</div><div class="desc">应用部署</div></div></a>
+      <a class="card" href="https://run.claw.cloud" target="_blank"><div class="icon">C</div><div><div class="title">ClawCloud</div><div class="desc">应用部署</div></div></a>
+      <a class="card" href="https://leaflow.net/login" target="_blank"><div class="icon">L</div><div><div class="title">Leaflow</div><div class="desc">应用部署</div></div></a>
+      <a class="card" href="https://huggingface.co/login" target="_blank"><div class="icon">H</div><div><div class="title">Hugging Face</div><div class="desc">应用部署</div></div></a>
+      <a class="card" href="https://www.sap.com/products/technology-platform/trial.html" target="_blank"><div class="icon">S</div><div><div class="title">SAP</div><div class="desc">应用部署</div></div></a>
+    </div>
+  </details>
+
+  <!-- 工具 -->
+  <details>
+    <summary>监控 / 解码 / 检测</summary>
+    <div class="grid">
+      <a class="card" href="https://ayo.94v.net/status/sub" target="_blank"><div class="icon">U</div><div><div class="title">Uptime Kuma</div><div class="desc">服务监控</div></div></a>
+      <a class="card" href="https://www.cloudflare.com/cdn-cgi/trace" target="_blank"><div class="icon">CF</div><div><div class="title">CF Trace</div><div class="desc">网络检测</div></div></a>
+      <a class="card" href="https://ippure.com" target="_blank"><div class="icon">I</div><div><div class="title">IPPure</div><div class="desc">IP 查询</div></div></a>
+      <a class="card" href="https://scamalytics.com" target="_blank"><div class="icon">S</div><div><div class="title">Scamalytics</div><div class="desc">风险分析</div></div></a>
+      <a class="card" href="https://dnschecker.org" target="_blank"><div class="icon">D</div><div><div class="title">DNSChecker</div><div class="desc">DNS 检测</div></div></a>
+      <a class="card" href="https://proxyip.chatkg.qzz.io" target="_blank"><div class="icon">P</div><div><div class="title">ProxyIP</div><div class="desc">代理检测</div></div></a>
+      <a class="card" href="https://www.base64decode.org/zh/" target="_blank"><div class="icon">B</div><div><div class="title">Base64 Decode</div><div class="desc">编码解码</div></div></a>
+      <a class="card" href="https://obfuscator.io/legacy-playground" target="_blank"><div class="icon">JS</div><div><div class="title">Obfuscator</div><div class="desc">JS 混淆</div></div></a>
+    </div>
+  </details>
+
+  <!-- 域名 / DNS -->
+  <details>
+    <summary>域名 / DNS</summary>
+    <div class="grid">
+      <a class="card" href="https://dnshe.com" target="_blank"><div class="icon">D</div><div><div class="title">DNSHe</div><div class="desc">域名</div></div></a>
+      <a class="card" href="https://gv.uy" target="_blank"><div class="icon">G</div><div><div class="title">GV.UY</div><div class="desc">域名</div></div></a>
+      <a class="card" href="https://dash.domain.digitalplat.org/auth/login?next=%2F" target="_blank"><div class="icon">D</div><div><div class="title">Digital</div><div class="desc">域名</div></div></a>
+      <a class="card" href="https://www.l53.net" target="_blank"><div class="icon">L</div><div><div class="title">L53</div><div class="desc">域名</div></div></a>
+      <a class="card" href="https://store.9v4.com/" target="_blank"><div class="icon">94V</div><div><div class="title">94V</div><div class="desc">域名</div></div></a>
+    </div>
+  </details>
+
+  <div class="no-results" id="noResults" style="display:none;">没有找到匹配的站点</div>
+</main>
+
+<script>
+// 元素选择
+const searchInput = document.getElementById('searchInput');
+const clearBtn = document.getElementById('clearBtn');
+const cards = document.querySelectorAll('.card');
+const details = document.querySelectorAll('details');
+const noResults = document.getElementById('noResults');
+
+// 快捷键 ⌘K / Ctrl+K 聚焦搜索
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    searchInput.focus();
+  }
+  if (e.key === 'Escape' && searchInput.value) {
+    searchInput.value = '';
+    performSearch();
+    searchInput.focus();
+  }
+});
+
+// 清除按钮
+clearBtn.addEventListener('click', () => {
+  searchInput.value = '';
+  performSearch();
+  searchInput.focus();
+});
+
+// 搜索功能
+searchInput.addEventListener('input', performSearch);
+function performSearch() {
+  const query = searchInput.value.trim().toLowerCase();
+  let visibleCount = 0;
+  const visibleDetails = new Set();
+
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    const isMatch = !query || text.includes(query);
+    if (isMatch) {
+      card.classList.remove('hidden');
+      visibleCount++;
+      const detail = card.closest('details');
+      if (detail) visibleDetails.add(detail);
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+
+  details.forEach(detail => {
+    detail.style.display = (!query || visibleDetails.has(detail)) ? '' : 'none';
+  });
+
+  noResults.style.display = (query && visibleCount === 0) ? 'block' : 'none';
+}
+
+// 自动加载 favicon
+document.querySelectorAll('.icon').forEach(icon => {
+  const link = icon.closest('a');
+  if (!link) return;
+  let url;
+  try { url = new URL(link.href).origin + '/favicon.ico'; } catch { return; }
+  const img = document.createElement('img');
+  img.src = url;
+  img.alt = '';
+  const timeout = setTimeout(() => {}, 3000);
+  img.onload = () => { clearTimeout(timeout); icon.textContent=''; icon.appendChild(img); };
+  img.onerror = () => { clearTimeout(timeout); };
+});
+</script>
+
+</body>
+</html>
