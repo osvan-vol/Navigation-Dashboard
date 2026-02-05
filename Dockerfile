@@ -5,4 +5,4 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/templates/default.conf.template
 COPY . /usr/share/nginx/html
 
-EXPOSE 80
+EXPOSE 8080
