@@ -87,11 +87,11 @@ header {
 
 .button-group {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: space-between;
+  flex-wrap: wrap;       /* 自动换行 */
+  gap: 12px 16px;        /* 横向间距 12px，纵向间距 16px */
+  justify-content: flex-start; /* 左对齐，多行自然排列 */
   max-width: 1200px;
-  margin: 0 auto 16px;
+  margin: 0 auto 32px;   /* 底部增加空间，分开 main 内容 */
   padding: 0 24px;
 }
 .jump-btn {
