@@ -85,13 +85,23 @@ header {
 }
 .search input:not(:placeholder-shown) ~ .clear { display: block; }
 
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto 16px;
+  padding: 0 24px;
+}
 .jump-btn {
+  flex: 1 1 140px;
+  text-align: center;
   background: linear-gradient(135deg, #6366f1, #818cf8);
   color: #fff;
   border: none;
   padding: 6px 14px;
   border-radius: 20px;
-  margin: 4px;
   font-size: 14px;
   cursor: pointer;
   transition: 0.25s all;
@@ -194,13 +204,14 @@ details[open] summary { color: var(--primary); }
 
 <main>
   <!-- 按钮导航 -->
-  <div style="max-width:1200px; margin:0 auto 16px; padding:0 24px;">
-    <button class="jump-btn" data-target="ai">AI 平台</button>
-    <button class="jump-btn" data-target="deploy">部署平台</button>
-    <button class="jump-btn" data-target="tools">监控 / 解码 / 检测</button>
-    <button class="jump-btn" data-target="dns">域名 / DNS</button>
-    <button class="jump-btn" data-target="forum">论坛</button>
-  </div>
+<div class="button-group">
+  <button class="jump-btn" data-target="dns">域名 / DNS</button>
+  <button class="jump-btn" data-target="forum">论坛</button>
+  <button class="jump-btn" data-target="ai">AI 平台</button>
+  <button class="jump-btn" data-target="deploy">部署平台</button>
+  <button class="jump-btn" data-target="tools">监控 / 解码 / 检测</button>
+</div>
+
 
   <!-- 论坛 -->
   <details id="forum">
@@ -221,6 +232,20 @@ details[open] summary { color: var(--primary); }
     </div>
   </details>
 
+  
+  <!-- 域名 / DNS -->
+  <details id="dns">
+    <summary>域名 / DNS</summary>
+    <div class="grid">
+      <a class="card" href="https://dnshe.com" target="_blank"><div class="icon">D</div><div><div class="title">DNSHe</div><div class="desc">域名</div></div></a>
+      <a class="card" href="https://gv.uy" target="_blank"><div class="icon">G</div><div><div class="title">GV.UY</div><div class="desc">域名</div></div></a>
+      <a class="card" href="https://dash.domain.digitalplat.org/auth/login?next=%2F" target="_blank"><div class="icon">D</div><div><div class="title">Digital</div><div class="desc">域名</div></div></a>
+      <a class="card" href="https://www.l53.net" target="_blank"><div class="icon">L</div><div><div class="title">L53</div><div class="desc">域名</div></div></a>
+      <a class="card" href="https://store.9v4.com/" target="_blank"><div class="icon">94V</div><div><div class="title">94V</div><div class="desc">域名</div></div></a>
+    </div>
+  </details>
+
+  
   <!-- AI -->
   <details id="ai">
     <summary>AI 平台</summary>
@@ -272,17 +297,7 @@ details[open] summary { color: var(--primary); }
     </div>
   </details>
 
-  <!-- 域名 / DNS -->
-  <details id="dns">
-    <summary>域名 / DNS</summary>
-    <div class="grid">
-      <a class="card" href="https://dnshe.com" target="_blank"><div class="icon">D</div><div><div class="title">DNSHe</div><div class="desc">域名</div></div></a>
-      <a class="card" href="https://gv.uy" target="_blank"><div class="icon">G</div><div><div class="title">GV.UY</div><div class="desc">域名</div></div></a>
-      <a class="card" href="https://dash.domain.digitalplat.org/auth/login?next=%2F" target="_blank"><div class="icon">D</div><div><div class="title">Digital</div><div class="desc">域名</div></div></a>
-      <a class="card" href="https://www.l53.net" target="_blank"><div class="icon">L</div><div><div class="title">L53</div><div class="desc">域名</div></div></a>
-      <a class="card" href="https://store.9v4.com/" target="_blank"><div class="icon">94V</div><div><div class="title">94V</div><div class="desc">域名</div></div></a>
-    </div>
-  </details>
+
 
   <div class="no-results" id="noResults" style="display:none;">没有找到匹配的站点</div>
 </main>
