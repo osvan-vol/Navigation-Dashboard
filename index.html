@@ -85,6 +85,23 @@ header {
 }
 .search input:not(:placeholder-shown) ~ .clear { display: block; }
 
+.jump-btn {
+  background: linear-gradient(135deg, #6366f1, #818cf8);
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.25s all;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+.jump-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
 main {
   max-width: 1200px;
   margin: 0 auto;
@@ -154,21 +171,6 @@ details[open] summary { color: var(--primary); }
   color: var(--muted);
 }
 
-.jump-btn {
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 12px;
-  margin: 2px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-.jump-btn:hover {
-  background: #4f46e5;
-}
-
 @media(max-width:640px){
   .header-inner { flex-direction: column; gap: 12px; }
   .search { width: 100%; min-width: auto; }
@@ -191,8 +193,8 @@ details[open] summary { color: var(--primary); }
 </header>
 
 <main>
-  <!-- 简介按钮 -->
-  <div class="intro" style="max-width:1200px; margin:0 auto 16px; padding:0 24px;">
+  <!-- 按钮导航 -->
+  <div style="max-width:1200px; margin:0 auto 16px; padding:0 24px;">
     <button class="jump-btn" data-target="ai">AI 平台</button>
     <button class="jump-btn" data-target="deploy">部署平台</button>
     <button class="jump-btn" data-target="tools">监控 / 解码 / 检测</button>
@@ -286,7 +288,7 @@ details[open] summary { color: var(--primary); }
 </main>
 
 <script>
-// 搜索功能相关
+// 搜索功能
 const searchInput = document.getElementById('searchInput');
 const clearBtn = document.getElementById('clearBtn');
 const cards = document.querySelectorAll('.card');
@@ -304,13 +306,17 @@ document.addEventListener('keydown', e => {
     searchInput.focus();
   }
 });
-clearBtn.addEventListener('click', () => { searchInput.value=''; performSearch(); searchInput.focus(); });
+clearBtn.addEventListener('click', () => {
+  searchInput.value = '';
+  performSearch();
+  searchInput.focus();
+});
 searchInput.addEventListener('input', performSearch);
-
 function performSearch() {
   const query = searchInput.value.trim().toLowerCase();
   let visibleCount = 0;
   const visibleDetails = new Set();
+
   cards.forEach(card => {
     const text = card.innerText.toLowerCase();
     const isMatch = !query || text.includes(query);
@@ -319,22 +325,29 @@ function performSearch() {
       visibleCount++;
       const detail = card.closest('details');
       if (detail) visibleDetails.add(detail);
-    } else { card.classList.add('hidden'); }
+    } else {
+      card.classList.add('hidden');
+    }
   });
+
   details.forEach(detail => {
     detail.style.display = (!query || visibleDetails.has(detail)) ? '' : 'none';
   });
+
   noResults.style.display = (query && visibleCount === 0) ? 'block' : 'none';
 }
 
-// 简介按钮点击跳转
+// 按钮跳转折叠逻辑
 document.querySelectorAll('.jump-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const targetId = btn.dataset.target;
     const detail = document.getElementById(targetId);
     if (detail) {
-      detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      detail.open = true; // 展开折叠面板
+      const isOpen = detail.open;
+      // 可选：折叠其他 panels
+      document.querySelectorAll('details').forEach(d => { d.open = false; });
+      detail.open = !isOpen;
+      if (!isOpen) detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
 });
@@ -354,5 +367,3 @@ document.querySelectorAll('.icon').forEach(icon => {
 });
 </script>
 
-</body>
-</html>
