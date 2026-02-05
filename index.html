@@ -90,14 +90,6 @@ main {
   margin: 0 auto;
   padding: 32px 24px 40px;
 }
-.intro {
-  max-width: 1200px;
-  margin: 0 auto 16px;
-  padding: 0 24px;
-  color: var(--muted);
-  font-size: 14px;
-}
-
 details {
   background: var(--card);
   border: 1px solid var(--border);
@@ -162,6 +154,21 @@ details[open] summary { color: var(--primary); }
   color: var(--muted);
 }
 
+.jump-btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 12px;
+  margin: 2px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.jump-btn:hover {
+  background: #4f46e5;
+}
+
 @media(max-width:640px){
   .header-inner { flex-direction: column; gap: 12px; }
   .search { width: 100%; min-width: auto; }
@@ -184,13 +191,17 @@ details[open] summary { color: var(--primary); }
 </header>
 
 <main>
-  <!-- 简介文字 -->
-  <div class="intro">
-    聚合 AI 平台 / 部署平台 / 监控 / 解码 / 域名管理 / 论坛 等导航工具
+  <!-- 简介按钮 -->
+  <div class="intro" style="max-width:1200px; margin:0 auto 16px; padding:0 24px;">
+    <button class="jump-btn" data-target="ai">AI 平台</button>
+    <button class="jump-btn" data-target="deploy">部署平台</button>
+    <button class="jump-btn" data-target="tools">监控 / 解码 / 检测</button>
+    <button class="jump-btn" data-target="dns">域名 / DNS</button>
+    <button class="jump-btn" data-target="forum">论坛</button>
   </div>
 
   <!-- 论坛 -->
-  <details>
+  <details id="forum">
     <summary>论坛</summary>
     <div class="grid">
       <a class="card" href="https://linux.do/" target="_blank">
@@ -209,7 +220,7 @@ details[open] summary { color: var(--primary); }
   </details>
 
   <!-- AI -->
-  <details>
+  <details id="ai">
     <summary>AI 平台</summary>
     <div class="grid">
       <a class="card" href="https://chat.openai.com" target="_blank">
@@ -228,7 +239,7 @@ details[open] summary { color: var(--primary); }
   </details>
 
   <!-- 部署 / 平台 -->
-  <details>
+  <details id="deploy">
     <summary>部署 / 平台</summary>
     <div class="grid">
       <a class="card" href="https://github.com" target="_blank"><div class="icon">GH</div><div><div class="title">GitHub</div><div class="desc">代码托管</div></div></a>
@@ -244,7 +255,7 @@ details[open] summary { color: var(--primary); }
   </details>
 
   <!-- 工具 -->
-  <details>
+  <details id="tools">
     <summary>监控 / 解码 / 检测</summary>
     <div class="grid">
       <a class="card" href="https://ayo.94v.net/status/sub" target="_blank"><div class="icon">U</div><div><div class="title">Uptime Kuma</div><div class="desc">服务监控</div></div></a>
@@ -260,7 +271,7 @@ details[open] summary { color: var(--primary); }
   </details>
 
   <!-- 域名 / DNS -->
-  <details>
+  <details id="dns">
     <summary>域名 / DNS</summary>
     <div class="grid">
       <a class="card" href="https://dnshe.com" target="_blank"><div class="icon">D</div><div><div class="title">DNSHe</div><div class="desc">域名</div></div></a>
@@ -275,14 +286,13 @@ details[open] summary { color: var(--primary); }
 </main>
 
 <script>
-// 元素选择
+// 搜索功能相关
 const searchInput = document.getElementById('searchInput');
 const clearBtn = document.getElementById('clearBtn');
 const cards = document.querySelectorAll('.card');
 const details = document.querySelectorAll('details');
 const noResults = document.getElementById('noResults');
 
-// 快捷键 ⌘K / Ctrl+K 聚焦搜索
 document.addEventListener('keydown', e => {
   if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
     e.preventDefault();
@@ -294,21 +304,13 @@ document.addEventListener('keydown', e => {
     searchInput.focus();
   }
 });
-
-// 清除按钮
-clearBtn.addEventListener('click', () => {
-  searchInput.value = '';
-  performSearch();
-  searchInput.focus();
-});
-
-// 搜索功能
+clearBtn.addEventListener('click', () => { searchInput.value=''; performSearch(); searchInput.focus(); });
 searchInput.addEventListener('input', performSearch);
+
 function performSearch() {
   const query = searchInput.value.trim().toLowerCase();
   let visibleCount = 0;
   const visibleDetails = new Set();
-
   cards.forEach(card => {
     const text = card.innerText.toLowerCase();
     const isMatch = !query || text.includes(query);
@@ -317,17 +319,25 @@ function performSearch() {
       visibleCount++;
       const detail = card.closest('details');
       if (detail) visibleDetails.add(detail);
-    } else {
-      card.classList.add('hidden');
-    }
+    } else { card.classList.add('hidden'); }
   });
-
   details.forEach(detail => {
     detail.style.display = (!query || visibleDetails.has(detail)) ? '' : 'none';
   });
-
   noResults.style.display = (query && visibleCount === 0) ? 'block' : 'none';
 }
+
+// 简介按钮点击跳转
+document.querySelectorAll('.jump-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const targetId = btn.dataset.target;
+    const detail = document.getElementById(targetId);
+    if (detail) {
+      detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      detail.open = true; // 展开折叠面板
+    }
+  });
+});
 
 // 自动加载 favicon
 document.querySelectorAll('.icon').forEach(icon => {
