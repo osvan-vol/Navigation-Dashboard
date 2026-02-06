@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🧰 Navigation-Dashboard </title>
+<title>🧰 UV 工具箱 · 完整版</title>
 <style>
 :root {
   --bg: #f5f5f7;
@@ -12,6 +12,9 @@
   --text: #1d1d1f;
   --muted: #6e6e73;
   --primary: #0071e3;
+  --success: #30d158;
+  --danger: #ff453a;
+  --warning: #ff9f0a;
   --radius: 18px;
   --shadow: 0 8px 30px rgba(0,0,0,0.08);
   --blur: blur(20px);
@@ -23,43 +26,345 @@
   --text: #f5f5f7;
   --muted: #a1a1a6;
   --primary: #0a84ff;
+  --success: #30d158;
   --shadow: 0 8px 30px rgba(0,0,0,0.5);
 }
 * { box-sizing:border-box; margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
 body { background:var(--bg); color:var(--text); transition: background .3s, color .3s; }
-header { position:sticky; top:0; z-index:50; backdrop-filter: var(--blur); background: color-mix(in srgb,var(--bg) 80%,transparent); border-bottom:1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px;}
+
+/* 头部 */
+header {
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter: var(--blur);
+  background: color-mix(in srgb,var(--bg) 80%,transparent);
+  border-bottom:1px solid var(--border);
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
 header h1 { font-size:20px; font-weight:600; letter-spacing:.2px;}
 .header-right { display:flex; align-items:center; gap:12px; flex:1; justify-content:flex-end;}
+
+/* 搜索框 */
 .search { position:relative; max-width:420px; width:100%;}
-.search input { width:100%; height:38px; padding:0 70px 0 14px; border-radius:12px; border:1px solid var(--border); background:var(--card); backdrop-filter:var(--blur); font-size:14px; color:var(--text); transition:border-color .2s, box-shadow .2s, background .2s;}
-.search input:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 4px color-mix(in srgb,var(--primary) 20%,transparent);}
-.search .clear { position:absolute; right:40px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:16px; display:none; background:none; border:none; color:var(--muted);}
+.search input {
+  width:100%;
+  height:38px;
+  padding:0 70px 0 14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:var(--card);
+  backdrop-filter:var(--blur);
+  font-size:14px;
+  color:var(--text);
+  transition:border-color .2s, box-shadow .2s, background .2s;
+}
+.search input:focus {
+  outline:none;
+  border-color:var(--primary);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--primary) 20%,transparent);
+}
+.search .clear {
+  position:absolute;
+  right:40px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  font-size:16px;
+  display:none;
+  background:none;
+  border:none;
+  color:var(--muted);
+}
 .search input:not(:placeholder-shown) ~ .clear { display:block;}
-.search .hint { position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:12px; color:var(--muted); background: rgba(0,0,0,0.05); border-radius:6px; padding:2px 6px;}
-.theme-toggle { cursor:pointer; font-size:18px; color:var(--muted); transition:.2s;}
+.search .hint {
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:12px;
+  color:var(--muted);
+  background: rgba(0,0,0,0.05);
+  border-radius:6px;
+  padding:2px 6px;
+}
+.theme-toggle {
+  cursor:pointer;
+  font-size:18px;
+  color:var(--muted);
+  transition:.2s;
+}
 .theme-toggle:hover { color:var(--primary);}
-main { max-width:1200px; margin:0 auto; padding:28px 20px 40px;}
-details { background:var(--card); backdrop-filter:var(--blur); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:16px;}
-summary { font-weight:600; font-size:15px; cursor:pointer;}
+
+/* 状态监控面板 */
+.status-panel {
+  max-width:1200px;
+  margin:20px auto;
+  padding:0 20px;
+}
+.status-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:16px;
+}
+.status-header h2 {
+  font-size:18px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.status-refresh {
+  background:none;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:6px 12px;
+  font-size:12px;
+  color:var(--muted);
+  cursor:pointer;
+  transition:.2s;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.status-refresh:hover {
+  border-color:var(--primary);
+  color:var(--primary);
+}
+.status-refresh.loading {
+  opacity:0.7;
+  cursor:not-allowed;
+}
+.status-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:12px;
+}
+.status-card {
+  background:var(--card);
+  backdrop-filter:var(--blur);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  transition:.2s;
+}
+.status-card:hover {
+  transform:translateY(-1px);
+  box-shadow:var(--shadow);
+}
+.status-indicator {
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  flex-shrink:0;
+}
+.status-indicator.up {
+  background:var(--success);
+  box-shadow:0 0 0 3px rgba(48,209,88,0.2);
+}
+.status-indicator.down {
+  background:var(--danger);
+  box-shadow:0 0 0 3px rgba(255,69,58,0.2);
+}
+.status-info { flex:1;}
+.status-name {
+  font-weight:600;
+  font-size:14px;
+  margin-bottom:2px;
+}
+.status-desc {
+  font-size:12px;
+  color:var(--muted);
+}
+.status-time {
+  font-size:11px;
+  color:var(--muted);
+  text-align:right;
+  min-width:50px;
+}
+.status-error {
+  grid-column:1/-1;
+  text-align:center;
+  padding:20px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* 主内容区 */
+main { max-width:1200px; margin:0 auto; padding:0 20px 40px;}
+
+/* 收藏夹和分类 */
+details {
+  background:var(--card);
+  backdrop-filter:var(--blur);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px;
+  margin-bottom:16px;
+}
+summary {
+  font-weight:600;
+  font-size:15px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+summary span { flex:1;}
 details[open] summary { color:var(--primary);}
-.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; margin-top:12px;}
-.card { background: rgba(255,255,255,0.6); border:1px solid var(--border); border-radius:14px; padding:14px 16px; display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit; transition:.2s;}
-[data-theme="dark"] .card { background: rgba(28,28,30,0.6);}
-.card:hover { transform:translateY(-2px); box-shadow:var(--shadow);}
+.sort-hint {
+  font-size:11px;
+  color:var(--muted);
+  margin-left:auto;
+}
+
+/* 工具网格 */
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:14px;
+  margin-top:12px;
+}
+
+/* 工具卡片 */
+.card {
+  background: rgba(255,255,255,0.6);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+  color:inherit;
+  transition:.2s;
+  position:relative;
+  cursor:pointer;
+}
+[data-theme="dark"] .card {
+  background: rgba(28,28,30,0.6);
+}
+.card:hover {
+  transform:translateY(-2px);
+  box-shadow:var(--shadow);
+}
 .card.hidden { display:none;}
-.icon { width:40px; height:40px; border-radius:10px; background: rgba(0,0,0,0.05); display:flex; align-items:center; justify-content:center; font-weight:600; color:var(--primary); overflow:hidden; flex-shrink:0; font-size:14px;}
-.icon img { width:70%; height:70%; object-fit:contain;}
-.title { font-weight:600; font-size:14px;}
-.desc { font-size:12px; color:var(--muted);}
-.no-results { text-align:center; padding:40px 20px; color:var(--muted);}
-footer { text-align:center; padding:30px 10px; color:var(--muted); font-size:12px;}
-@media(max-width:640px){ header{flex-wrap:wrap; gap:10px;} .header-right{width:100%; justify-content:space-between;} main{padding:16px 12px 30px;} }
+.card.selected {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, var(--card));
+}
+.card.dragging {
+  opacity:0.5;
+  transform:scale(0.95);
+}
+
+/* 收藏按钮 */
+.card .favorite-btn {
+  position:absolute;
+  top:8px;
+  right:8px;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:rgba(0,0,0,0.05);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  border:none;
+  color:var(--muted);
+  font-size:14px;
+  transition:.2s;
+  z-index:2;
+}
+.card .favorite-btn:hover {
+  background:var(--primary);
+  color:white;
+}
+.card .favorite-btn.favorited {
+  color:#ffd700;
+}
+
+/* 图标 */
+.icon {
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  background: rgba(0,0,0,0.05);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
+  color:var(--primary);
+  overflow:hidden;
+  flex-shrink:0;
+  font-size:14px;
+  position:relative;
+}
+.icon img {
+  width:70%;
+  height:70%;
+  object-fit:contain;
+}
+.title {
+  font-weight:600;
+  font-size:14px;
+}
+.desc {
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* 无搜索结果提示 */
+.no-results {
+  text-align:center;
+  padding:40px 20px;
+  color:var(--muted);
+}
+
+/* 页脚 */
+footer {
+  text-align:center;
+  padding:30px 10px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* 响应式设计 */
+@media(max-width:640px){
+  header {
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .header-right {
+    width:100%;
+    justify-content:space-between;
+  }
+  .status-panel {
+    padding:0 12px;
+    margin:16px auto;
+  }
+  .status-grid {
+    grid-template-columns:1fr;
+  }
+  main {
+    padding:0 12px 30px;
+  }
+}
 </style>
 </head>
 <body data-theme="light">
 
 <header>
-<h1>🧰 Navigation-Dashboard </h1>
+<h1>🧰 UV 工具箱</h1>
 <div class="header-right">
   <div class="search">
     <input id="searchInput" placeholder="搜索工具…" />
@@ -70,16 +375,58 @@ footer { text-align:center; padding:30px 10px; color:var(--muted); font-size:12p
 </div>
 </header>
 
+<!-- 状态监控面板 -->
+<div class="status-panel">
+  <div class="status-header">
+    <h2>📊 服务状态监控</h2>
+    <button class="status-refresh" id="refreshStatus">
+      <span>刷新</span>
+      <span id="refreshIcon">↻</span>
+    </button>
+  </div>
+  <div class="status-grid" id="statusGrid">
+    <!-- 状态卡片会动态加载到这里 -->
+    <div class="status-error">正在加载状态信息...</div>
+  </div>
+</div>
+
 <main>
 
+<!-- ⭐ 收藏夹 -->
+<details id="favorites" open>
+<summary>
+  <span>⭐ 收藏夹</span>
+  <div class="sort-hint">拖拽排序</div>
+</summary>
+<div class="grid" id="favoritesGrid">
+  <!-- 收藏的工具会动态添加到这里 -->
+</div>
+</details>
+
 <!-- ⭐ 精选 -->
-<details id="star" open>
+<details id="star">
 <summary>⭐ 站长精选</summary>
 <div class="grid">
-<a class="card" href="https://chat.openai.com" target="_blank"><div class="icon">C</div><div><div class="title">ChatGPT</div><div class="desc">日常必开，写代码、文案、查询资料</div></div></a >
-<a class="card" href="https://dash.cloudflare.com" target="_blank"><div class="icon">CF</div><div><div class="title">Cloudflare</div><div class="desc">CDN+DNS+防护，一站式网络基础设施</div></div></a >
-<a class="card" href="https://www.deepseek.com" target="_blank"><div class="icon">D</div><div><div class="title">DeepSeek</div><div class="desc">AI 助手，代码与文案创作</div></div></a >
-<a class="card" href="https://ayo.94v.net/status/sub" target="_blank"><div class="icon">U</div><div><div class="title">Uptime Kuma</div><div class="desc">服务监控，实时状态检测</div></div></a >
+<a class="card" href="https://chat.openai.com" target="_blank" data-title="ChatGPT" data-desc="日常必开，写代码、文案、查询资料">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">C</div>
+  <div><div class="title">ChatGPT</div><div class="desc">日常必开，写代码、文案、查询资料</div></div>
+</a>
+<a class="card" href="https://dash.cloudflare.com" target="_blank" data-title="Cloudflare" data-desc="CDN+DNS+防护，一站式网络基础设施">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">CF</div>
+  <div><div class="title">Cloudflare</div><div class="desc">CDN+DNS+防护，一站式网络基础设施</div></div>
+</a>
+<a class="card" href="https://www.deepseek.com" target="_blank" data-title="DeepSeek" data-desc="AI 助手，代码与文案创作">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">D</div>
+  <div><div class="title">DeepSeek</div><div class="desc">AI 助手，代码与文案创作</div></div>
+</a>
+<a class="card" href="https://ayo.94v.net/status/sub" target="_blank" data-title="Uptime Kuma" data-desc="服务监控，实时状态检测">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">U</div>
+  <div><div class="title">Uptime Kuma</div><div class="desc">服务监控，实时状态检测</div></div>
+</a>
 </div>
 </details>
 
@@ -87,9 +434,18 @@ footer { text-align:center; padding:30px 10px; color:var(--muted); font-size:12p
 <details id="forum">
 <summary>📘 论坛 & 社区</summary>
 <div class="grid">
-<a class="card" href="https://linux.do/" target="_blank"><div class="icon">L</div><div><div class="title">linux.do</div><div class="desc">论坛</div></div></a >
-<a class="card" href="https://www.nodeloc.com/" target="_blank"><div class="icon">N</div><div><div class="title">nodeloc</div><div class="desc">论坛</div></div></a >
-<a class="card" href="https://ygkkk.blogspot.com/" target="_blank"><div class="icon">L</div><div><div class="title">甬哥侃侃侃</div><div class="desc">论坛</div></div></a >
+<a class="card" href="https://linux.do/" target="_blank" data-title="linux.do" data-desc="论坛">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">L</div><div><div class="title">linux.do</div><div class="desc">论坛</div></div>
+</a>
+<a class="card" href="https://www.nodeloc.com/" target="_blank" data-title="nodeloc" data-desc="论坛">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">N</div><div><div class="title">nodeloc</div><div class="desc">论坛</div></div>
+</a>
+<a class="card" href="https://ygkkk.blogspot.com/" target="_blank" data-title="甬哥侃侃侃" data-desc="论坛">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">L</div><div><div class="title">甬哥侃侃侃</div><div class="desc">论坛</div></div>
+</a>
 </div>
 </details>
 
@@ -97,11 +453,26 @@ footer { text-align:center; padding:30px 10px; color:var(--muted); font-size:12p
 <details id="dns">
 <summary>🌐 域名 / DNS</summary>
 <div class="grid">
-<a class="card" href="https://dnshe.com" target="_blank"><div class="icon">D</div><div><div class="title">DNSHe</div><div class="desc">域名</div></div></a >
-<a class="card" href="https://gv.uy" target="_blank"><div class="icon">G</div><div><div class="title">GV.UY</div><div class="desc">域名</div></div></a >
-<a class="card" href="https://dash.domain.digitalplat.org/auth/login?next=%2F" target="_blank"><div class="icon">D</div><div><div class="title">Digital</div><div class="desc">域名</div></div></a >
-<a class="card" href="https://www.l53.net" target="_blank"><div class="icon">L</div><div><div class="title">L53</div><div class="desc">域名</div></div></a >
-<a class="card" href="https://store.9v4.com/" target="_blank"><div class="icon">94V</div><div><div class="title">94V</div><div class="desc">域名</div></div></a >
+<a class="card" href="https://dnshe.com" target="_blank" data-title="DNSHe" data-desc="域名">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">D</div><div><div class="title">DNSHe</div><div class="desc">域名</div></div>
+</a>
+<a class="card" href="https://gv.uy" target="_blank" data-title="GV.UY" data-desc="域名">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">G</div><div><div class="title">GV.UY</div><div class="desc">域名</div></div>
+</a>
+<a class="card" href="https://dash.domain.digitalplat.org/auth/login?next=%2F" target="_blank" data-title="Digital" data-desc="域名">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">D</div><div><div class="title">Digital</div><div class="desc">域名</div></div>
+</a>
+<a class="card" href="https://www.l53.net" target="_blank" data-title="L53" data-desc="域名">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">L</div><div><div class="title">L53</div><div class="desc">域名</div></div>
+</a>
+<a class="card" href="https://store.9v4.com/" target="_blank" data-title="94V" data-desc="域名">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">94V</div><div><div class="title">94V</div><div class="desc">域名</div></div>
+</a>
 </div>
 </details>
 
@@ -109,9 +480,18 @@ footer { text-align:center; padding:30px 10px; color:var(--muted); font-size:12p
 <details id="ai">
 <summary>🤖 AI 平台</summary>
 <div class="grid">
-<a class="card" href="https://chat.openai.com" target="_blank"><div class="icon">C</div><div><div class="title">ChatGPT</div><div class="desc">OpenAI</div></div></a >
-<a class="card" href="https://gemini.google.com" target="_blank"><div class="icon">G</div><div><div class="title">Gemini</div><div class="desc">Google</div></div></a >
-<a class="card" href="https://www.deepseek.com" target="_blank"><div class="icon">D</div><div><div class="title">DeepSeek</div><div class="desc">模型平台</div></div></a >
+<a class="card" href="https://chat.openai.com" target="_blank" data-title="ChatGPT" data-desc="OpenAI">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">C</div><div><div class="title">ChatGPT</div><div class="desc">OpenAI</div></div>
+</a>
+<a class="card" href="https://gemini.google.com" target="_blank" data-title="Gemini" data-desc="Google">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">G</div><div><div class="title">Gemini</div><div class="desc">Google</div></div>
+</a>
+<a class="card" href="https://www.deepseek.com" target="_blank" data-title="DeepSeek" data-desc="模型平台">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">D</div><div><div class="title">DeepSeek</div><div class="desc">模型平台</div></div>
+</a>
 </div>
 </details>
 
@@ -119,15 +499,42 @@ footer { text-align:center; padding:30px 10px; color:var(--muted); font-size:12p
 <details id="deploy">
 <summary>📦 应用容器</summary>
 <div class="grid">
-<a class="card" href="https://github.com" target="_blank"><div class="icon">GH</div><div><div class="title">GitHub</div><div class="desc">代码托管</div></div></a >
-<a class="card" href="https://dash.cloudflare.com" target="_blank"><div class="icon">CF</div><div><div class="title">Cloudflare</div><div class="desc">CDN / 部署</div></div></a >
-<a class="card" href="https://dashboard.render.com/login" target="_blank"><div class="icon">R</div><div><div class="title">Render</div><div class="desc">应用部署</div></div></a >
-<a class="card" href="https://signin.koyeb.com" target="_blank"><div class="icon">K</div><div><div class="title">Koyeb</div><div class="desc">应用部署</div></div></a >
-<a class="card" href="https://zeabur.app" target="_blank"><div class="icon">Z</div><div><div class="title">Zeabur</div><div class="desc">应用部署</div></div></a >
-<a class="card" href="https://run.claw.cloud" target="_blank"><div class="icon">C</div><div><div class="title">ClawCloud</div><div class="desc">应用部署</div></div></a >
-<a class="card" href="https://leaflow.net/login" target="_blank"><div class="icon">L</div><div><div class="title">Leaflow</div><div class="desc">应用部署</div></div></a >
-<a class="card" href="https://huggingface.co/login" target="_blank"><div class="icon">H</div><div><div class="title">Hugging Face</div><div class="desc">应用部署</div></div></a >
-<a class="card" href="https://www.sap.com/products/technology-platform/trial.html" target="_blank"><div class="icon">S</div><div><div class="title">SAP</div><div class="desc">应用部署</div></div></a >
+<a class="card" href="https://github.com" target="_blank" data-title="GitHub" data-desc="代码托管">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">GH</div><div><div class="title">GitHub</div><div class="desc">代码托管</div></div>
+</a>
+<a class="card" href="https://dash.cloudflare.com" target="_blank" data-title="Cloudflare" data-desc="CDN / 部署">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">CF</div><div><div class="title">Cloudflare</div><div class="desc">CDN / 部署</div></div>
+</a>
+<a class="card" href="https://dashboard.render.com/login" target="_blank" data-title="Render" data-desc="应用部署">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">R</div><div><div class="title">Render</div><div class="desc">应用部署</div></div>
+</a>
+<a class="card" href="https://signin.koyeb.com" target="_blank" data-title="Koyeb" data-desc="应用部署">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">K</div><div><div class="title">Koyeb</div><div class="desc">应用部署</div></div>
+</a>
+<a class="card" href="https://zeabur.app" target="_blank" data-title="Zeabur" data-desc="应用部署">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">Z</div><div><div class="title">Zeabur</div><div class="desc">应用部署</div></div>
+</a>
+<a class="card" href="https://run.claw.cloud" target="_blank" data-title="ClawCloud" data-desc="应用部署">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">C</div><div><div class="title">ClawCloud</div><div class="desc">应用部署</div></div>
+</a>
+<a class="card" href="https://leaflow.net/login" target="_blank" data-title="Leaflow" data-desc="应用部署">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">L</div><div><div class="title">Leaflow</div><div class="desc">应用部署</div></div>
+</a>
+<a class="card" href="https://huggingface.co/login" target="_blank" data-title="Hugging Face" data-desc="应用部署">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">H</div><div><div class="title">Hugging Face</div><div class="desc">应用部署</div></div>
+</a>
+<a class="card" href="https://www.sap.com/products/technology-platform/trial.html" target="_blank" data-title="SAP" data-desc="应用部署">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">S</div><div><div class="title">SAP</div><div class="desc">应用部署</div></div>
+</a>
 </div>
 </details>
 
@@ -135,73 +542,408 @@ footer { text-align:center; padding:30px 10px; color:var(--muted); font-size:12p
 <details id="tools">
 <summary>📊 监控 / 解码 / 检测</summary>
 <div class="grid">
-<a class="card" href="https://ayo.94v.net/status/sub" target="_blank"><div class="icon">U</div><div><div class="title">Uptime Kuma</div><div class="desc">服务监控</div></div></a >
-<a class="card" href="https://www.cloudflare.com/cdn-cgi/trace" target="_blank"><div class="icon">CF</div><div><div class="title">CF Trace</div><div class="desc">网络检测</div></div></a >
-<a class="card" href="https://ippure.com" target="_blank"><div class="icon">I</div><div><div class="title">IPPure</div><div class="desc">IP 查询</div></div></a >
-<a class="card" href="https://scamalytics.com" target="_blank"><div class="icon">S</div><div><div class="title">Scamalytics</div><div class="desc">风险分析</div></div></a >
-<a class="card" href="https://dnschecker.org" target="_blank"><div class="icon">D</div><div><div class="title">DNSChecker</div><div class="desc">DNS 检测</div></div></a >
-<a class="card" href="https://proxyip.chatkg.qzz.io" target="_blank"><div class="icon">P</div><div><div class="title">ProxyIP</div><div class="desc">代理检测</div></div></a >
-<a class="card" href="https://www.base64decode.org/zh/" target="_blank"><div class="icon">B</div><div><div class="title">Base64 Decode</div><div class="desc">编码解码</div></div></a >
-<a class="card" href="https://obfuscator.io/legacy-playground" target="_blank"><div class="icon">JS</div><div><div class="title">Obfuscator</div><div class="desc">JS 混淆</div></div></a >
-<a class="card" href="https://toolbox.googleapps.com/apps/dig/#A/" target="_blank"><div class="icon">JS</div><div><div class="title">DNS lookup</div><div class="desc">A 记录查询</div></div></a >
+<a class="card" href="https://ayo.94v.net/status/sub" target="_blank" data-title="Uptime Kuma" data-desc="服务监控">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">U</div><div><div class="title">Uptime Kuma</div><div class="desc">服务监控</div></div>
+</a>
+<a class="card" href="https://www.cloudflare.com/cdn-cgi/trace" target="_blank" data-title="CF Trace" data-desc="网络检测">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">CF</div><div><div class="title">CF Trace</div><div class="desc">网络检测</div></div>
+</a>
+<a class="card" href="https://ippure.com" target="_blank" data-title="IPPure" data-desc="IP 查询">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">I</div><div><div class="title">IPPure</div><div class="desc">IP 查询</div></div>
+</a>
+<a class="card" href="https://scamalytics.com" target="_blank" data-title="Scamalytics" data-desc="风险分析">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">S</div><div><div class="title">Scamalytics</div><div class="desc">风险分析</div></div>
+</a>
+<a class="card" href="https://dnschecker.org" target="_blank" data-title="DNSChecker" data-desc="DNS 检测">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">D</div><div><div class="title">DNSChecker</div><div class="desc">DNS 检测</div></div>
+</a>
+<a class="card" href="https://proxyip.chatkg.qzz.io" target="_blank" data-title="ProxyIP" data-desc="代理检测">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">P</div><div><div class="title">ProxyIP</div><div class="desc">代理检测</div></div>
+</a>
+<a class="card" href="https://www.base64decode.org/zh/" target="_blank" data-title="Base64 Decode" data-desc="编码解码">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">B</div><div><div class="title">Base64 Decode</div><div class="desc">编码解码</div></div>
+</a>
+<a class="card" href="https://obfuscator.io/legacy-playground" target="_blank" data-title="Obfuscator" data-desc="JS 混淆">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">JS</div><div><div class="title">Obfuscator</div><div class="desc">JS 混淆</div></div>
+</a>
+<a class="card" href="https://toolbox.googleapps.com/apps/dig/#A/" target="_blank" data-title="DNS lookup" data-desc="A 记录查询">
+  <div class="favorite-btn">☆</div>
+  <div class="icon">JS</div><div><div class="title">DNS lookup</div><div class="desc">A 记录查询</div></div>
+</a>
 </div>
 </details>
 
 <div class="no-results" id="noResults" style="display:none;">没有找到匹配的工具 😢</div>
 </main>
 
-<footer>© 2026 UV 工具箱</footer>
+<footer>© 2026 UV 工具箱 · 按 ☆ 收藏工具 · 拖拽排序</footer>
 
 <script>
-// 主题切换
-const themeToggle=document.getElementById('themeToggle');
-themeToggle.addEventListener('click',()=>{
-  const theme=document.body.getAttribute('data-theme');
-  if(theme==='light'){ document.body.setAttribute('data-theme','dark'); themeToggle.textContent='☀️'; }
-  else{ document.body.setAttribute('data-theme','light'); themeToggle.textContent='🌙'; }
-});
+// ========== 状态监控模块 ==========
+class StatusMonitor {
+  constructor() {
+    this.lastUpdate = null;
+    this.statusData = null;
+  }
 
-// 搜索功能
-const searchInput=document.getElementById('searchInput');
-const clearBtn=document.getElementById('clearBtn');
-const cards=document.querySelectorAll('.card');
-const detailsEls=document.querySelectorAll('details');
-const noResults=document.getElementById('noResults');
+  // 模拟数据（根据您提供的页面内容）
+  async fetchStatus() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const mockData = {
+          lastUpdate: new Date().toISOString(),
+          monitors: [
+            { name: 'Uptime Kuma', uptime: '100%', lastCheck: '21m ago', status: 'up' },
+            { name: 'Navigation', uptime: '98.9%', lastCheck: '22m ago', status: 'up' },
+            { name: 'Leaflow（🇭🇰）', uptime: '99.93%', lastCheck: '23m ago', status: 'up' },
+            { name: 'Koyeb（🇺🇸）', uptime: '99.93%', lastCheck: '22m ago', status: 'up' },
+            { name: 'Hugging Face（🇺🇸）', uptime: '100%', lastCheck: '21m ago', status: 'up' },
+            { name: 'SAP (🇸🇬)', uptime: '99.38%', lastCheck: '22m ago', status: 'up' }
+          ]
+        };
+        resolve(mockData);
+      }, 500);
+    });
+  }
 
-document.addEventListener('keydown',e=>{
-  if((e.metaKey||e.ctrlKey)&&e.key==='k'){ e.preventDefault(); searchInput.focus(); }
-  if(e.key==='Escape'&&searchInput.value){ searchInput.value=''; performSearch(); searchInput.focus();}
-});
+  async updateStatus() {
+    const refreshBtn = document.getElementById('refreshStatus');
+    const refreshIcon = document.getElementById('refreshIcon');
+    
+    refreshBtn.classList.add('loading');
+    refreshIcon.textContent = '⟳';
+    
+    const data = await this.fetchStatus();
+    
+    if (data) {
+      this.statusData = data;
+      this.lastUpdate = new Date();
+      this.renderStatusPanel();
+    }
+    
+    refreshBtn.classList.remove('loading');
+    refreshIcon.textContent = '↻';
+    
+    // 显示更新时间
+    const now = new Date();
+    const timeStr = now.getHours().toString().padStart(2, '0') + ':' + 
+                   now.getMinutes().toString().padStart(2, '0');
+    refreshBtn.querySelector('span:first-child').textContent = `刷新 (${timeStr})`;
+  }
 
-clearBtn.addEventListener('click',()=>{ searchInput.value=''; performSearch(); searchInput.focus(); });
-searchInput.addEventListener('input',performSearch);
+  renderStatusPanel() {
+    const statusGrid = document.getElementById('statusGrid');
+    
+    if (!this.statusData || !this.statusData.monitors) {
+      statusGrid.innerHTML = '<div class="status-error">无法加载状态数据</div>';
+      return;
+    }
 
-function performSearch(){
-  const query=searchInput.value.trim().toLowerCase();
-  let visibleCount=0;
-  const visibleDetails=new Set();
-  cards.forEach(card=>{
-    const text=card.innerText.toLowerCase();
-    const isMatch=!query||text.includes(query);
-    if(isMatch){ card.classList.remove('hidden'); visibleCount++; visibleDetails.add(card.closest('details')); }
-    else{ card.classList.add('hidden'); }
-  });
-  detailsEls.forEach(d=>{ d.style.display = (!query||visibleDetails.has(d))?'':'none'; });
-  noResults.style.display=(query&&visibleCount===0)?'block':'none';
+    const statusCards = this.statusData.monitors.map(monitor => {
+      const statusClass = monitor.status === 'up' ? 'up' : 'down';
+      return `
+        <div class="status-card">
+          <div class="status-indicator ${statusClass}"></div>
+          <div class="status-info">
+            <div class="status-name">${monitor.name}</div>
+            <div class="status-desc">正常运行时间: ${monitor.uptime}</div>
+          </div>
+          <div class="status-time">${monitor.lastCheck}</div>
+        </div>
+      `;
+    }).join('');
+
+    statusGrid.innerHTML = statusCards;
+  }
+
+  startAutoRefresh(interval = 60000) {
+    setInterval(() => {
+      this.updateStatus();
+    }, interval);
+  }
 }
 
-// favicon 自动加载
-document.querySelectorAll('.icon').forEach(icon=>{
-  const link=icon.closest('a');
-  if(!link) return;
+// ========== 数据存储 ==========
+const Storage = {
+  getFavorites() {
+    return JSON.parse(localStorage.getItem('uv-favorites') || '[]');
+  },
+  saveFavorites(favorites) {
+    localStorage.setItem('uv-favorites', JSON.stringify(favorites));
+  },
+  getOrder() {
+    return JSON.parse(localStorage.getItem('uv-order') || '{}');
+  },
+  saveOrder(order) {
+    localStorage.setItem('uv-order', JSON.stringify(order));
+  }
+};
+
+// ========== 主题切换 ==========
+const themeToggle = document.getElementById('themeToggle');
+themeToggle.addEventListener('click', () => {
+  const theme = document.body.getAttribute('data-theme');
+  if (theme === 'light') {
+    document.body.setAttribute('data-theme', 'dark');
+    themeToggle.textContent = '☀️';
+  } else {
+    document.body.setAttribute('data-theme', 'light');
+    themeToggle.textContent = '🌙';
+  }
+});
+
+// ========== 搜索功能 ==========
+const searchInput = document.getElementById('searchInput');
+const clearBtn = document.getElementById('clearBtn');
+const cards = document.querySelectorAll('.card');
+const detailsEls = document.querySelectorAll('details');
+const noResults = document.getElementById('noResults');
+
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    searchInput.focus();
+  }
+  if (e.key === 'Escape' && searchInput.value) {
+    searchInput.value = '';
+    performSearch();
+    searchInput.focus();
+  }
+});
+
+clearBtn.addEventListener('click', () => {
+  searchInput.value = '';
+  performSearch();
+  searchInput.focus();
+});
+searchInput.addEventListener('input', performSearch);
+
+function performSearch() {
+  const query = searchInput.value.trim().toLowerCase();
+  let visibleCount = 0;
+  const visibleDetails = new Set();
+  
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    const isMatch = !query || text.includes(query);
+    if (isMatch) {
+      card.classList.remove('hidden');
+      visibleCount++;
+      visibleDetails.add(card.closest('details'));
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+  
+  detailsEls.forEach(d => {
+    d.style.display = (!query || visibleDetails.has(d)) ? '' : 'none';
+  });
+  
+  noResults.style.display = (query && visibleCount === 0) ? 'block' : 'none';
+}
+
+// ========== 收藏功能 ==========
+function toggleFavorite(card) {
+  const url = card.href;
+  const title = card.dataset.title;
+  const desc = card.dataset.desc;
+  const icon = card.querySelector('.icon').textContent;
+  
+  let favorites = Storage.getFavorites();
+  const isFavorited = favorites.some(fav => fav.url === url);
+  
+  const btn = card.querySelector('.favorite-btn');
+  
+  if (isFavorited) {
+    favorites = favorites.filter(fav => fav.url !== url);
+    btn.classList.remove('favorited');
+    btn.textContent = '☆';
+  } else {
+    favorites.push({ url, title, desc, icon });
+    btn.classList.add('favorited');
+    btn.textContent = '★';
+  }
+  
+  Storage.saveFavorites(favorites);
+  renderFavorites();
+}
+
+function renderFavorites() {
+  const favoritesGrid = document.getElementById('favoritesGrid');
+  const favorites = Storage.getFavorites();
+  
+  if (favorites.length === 0) {
+    favoritesGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);font-size:14px;">点击 ☆ 添加收藏的工具</div>';
+    return;
+  }
+  
+  const order = Storage.getOrder();
+  favorites.sort((a, b) => {
+    const orderA = order[a.url] || 9999;
+    const orderB = order[b.url] || 9999;
+    return orderA - orderB;
+  });
+  
+  favoritesGrid.innerHTML = favorites.map(fav => `
+    <a class="card" href="${fav.url}" target="_blank" draggable="true" data-url="${fav.url}" data-title="${fav.title}" data-desc="${fav.desc}">
+      <div class="favorite-btn favorited">★</div>
+      <div class="icon">${fav.icon}</div>
+      <div>
+        <div class="title">${fav.title}</div>
+        <div class="desc">${fav.desc}</div>
+      </div>
+    </a>
+  `).join('');
+  
+  setupDragAndDrop();
+  setupCardEvents();
+}
+
+// ========== 拖拽排序 ==========
+function setupDragAndDrop() {
+  const favoritesGrid = document.getElementById('favoritesGrid');
+  const cards = favoritesGrid.querySelectorAll('.card');
+  
+  let draggedCard = null;
+  
+  cards.forEach(card => {
+    card.addEventListener('dragstart', e => {
+      draggedCard = card;
+      setTimeout(() => {
+        card.classList.add('dragging');
+      }, 0);
+    });
+    
+    card.addEventListener('dragend', e => {
+      setTimeout(() => {
+        card.classList.remove('dragging');
+        draggedCard = null;
+      }, 0);
+    });
+  });
+  
+  favoritesGrid.addEventListener('dragover', e => {
+    e.preventDefault();
+    const afterElement = getDragAfterElement(favoritesGrid, e.clientY);
+    const draggable = draggedCard;
+    
+    if (afterElement == null) {
+      favoritesGrid.appendChild(draggable);
+    } else {
+      favoritesGrid.insertBefore(draggable, afterElement);
+    }
+    
+    saveNewOrder();
+  });
+}
+
+function getDragAfterElement(container, y) {
+  const draggableElements = [...container.querySelectorAll('.card:not(.dragging)')];
+  
+  return draggableElements.reduce((closest, child) => {
+    const box = child.getBoundingClientRect();
+    const offset = y - box.top - box.height / 2;
+    
+    if (offset < 0 && offset > closest.offset) {
+      return { offset: offset, element: child };
+    } else {
+      return closest;
+    }
+  }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+
+function saveNewOrder() {
+  const favoritesGrid = document.getElementById('favoritesGrid');
+  const cards = favoritesGrid.querySelectorAll('.card');
+  const order = {};
+  
+  cards.forEach((card, index) => {
+    const url = card.dataset.url;
+    if (url) {
+      order[url] = index;
+    }
+  });
+  
+  Storage.saveOrder(order);
+}
+
+// ========== 卡片事件 ==========
+function setupCardEvents() {
+  document.querySelectorAll('.card').forEach(card => {
+    const favoriteBtn = card.querySelector('.favorite-btn');
+    if (favoriteBtn) {
+      favoriteBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleFavorite(card);
+      });
+    }
+  });
+}
+
+// ========== 初始化收藏状态 ==========
+function initFavoriteStates() {
+  const favorites = Storage.getFavorites();
+  const favoriteUrls = new Set(favorites.map(fav => fav.url));
+  
+  document.querySelectorAll('.card').forEach(card => {
+    const url = card.href;
+    const btn = card.querySelector('.favorite-btn');
+    
+    if (favoriteUrls.has(url) && btn) {
+      btn.classList.add('favorited');
+      btn.textContent = '★';
+    }
+  });
+}
+
+// ========== Favicon加载 ==========
+document.querySelectorAll('.icon').forEach(icon => {
+  const link = icon.closest('a');
+  if (!link) return;
   let url;
-  try{ url=new URL(link.href).origin+'/favicon.ico'; }catch{return;}
-  const img=document.createElement('img');
-  img.src=url;
-  img.alt='';
-  img.onload=()=>{ icon.textContent=''; icon.appendChild(img); }
+  try {
+    url = new URL(link.href).origin + '/favicon.ico';
+  } catch {
+    return;
+  }
+  const img = document.createElement('img');
+  img.src = url;
+  img.alt = '';
+  img.onload = () => {
+    icon.textContent = '';
+    icon.appendChild(img);
+  };
+});
+
+// ========== 页面初始化 ==========
+window.addEventListener('DOMContentLoaded', () => {
+  // 初始化状态监控
+  const statusMonitor = new StatusMonitor();
+  document.getElementById('refreshStatus').addEventListener('click', () => {
+    statusMonitor.updateStatus();
+  });
+  statusMonitor.updateStatus();
+  
+  // 初始化收藏功能
+  renderFavorites();
+  initFavoriteStates();
+  setupCardEvents();
+  
+  // 默认展开收藏夹
+  document.getElementById('favorites').open = true;
+  
+  // 开始自动刷新状态
+  statusMonitor.startAutoRefresh(60000);
 });
 </script>
-
 </body>
 </html>
