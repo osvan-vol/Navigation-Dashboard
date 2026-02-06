@@ -3,355 +3,259 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UV 导航</title>
+<title>🧰 UV 工具箱 · 高级导航</title>
+
+<!-- Apple 风格字体 -->
 <style>
 :root {
   --bg: #f5f5f7;
-  --card: #ffffff;
-  --border: #e5e7eb;
-  --text: #111827;
-  --muted: #6b7280;
+  --card: rgba(255,255,255,0.75);
+  --border: rgba(0,0,0,0.08);
+  --text: #1d1d1f;
+  --muted: #6e6e73;
   --primary: #0071e3;
   --radius: 18px;
-  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+  --shadow: 0 8px 30px rgba(0,0,0,0.08);
+  --blur: blur(20px);
 }
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
+[data-theme="dark"] {
+  --bg: #0b0b0d;
+  --card: rgba(28,28,30,0.75);
+  --border: rgba(255,255,255,0.12);
+  --text: #f5f5f7;
+  --muted: #a1a1a6;
+  --primary: #0a84ff;
+  --shadow: 0 8px 30px rgba(0,0,0,0.5);
 }
 
-/* Header */
+* { box-sizing: border-box; margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+
+body { background: var(--bg); color: var(--text); transition: background .3s,color .3s; }
+
 header {
   position: sticky;
-  top: 0;
-  z-index: 50;
-  backdrop-filter: saturate(180%) blur(16px);
-  background: rgba(245,245,247,.8);
+  top:0;
+  z-index:50;
+  backdrop-filter: var(--blur);
+  background: color-mix(in srgb,var(--bg) 80%,transparent);
   border-bottom: 1px solid var(--border);
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
 }
-.header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 14px 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.logo {
-  font-size: 20px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-.search {
-  flex: 1;
-  position: relative;
-}
+header h1 { font-size:20px; font-weight:600; letter-spacing:.2px; }
+.header-right { display:flex; align-items:center; gap:12px; flex:1; justify-content:flex-end; }
+
+.search { position:relative; max-width:420px; width:100%; }
 .search input {
-  width: 100%;
-  height: 40px;
-  padding: 0 44px 0 16px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  font-size: 14px;
-  background: #fff;
+  width:100%; height:38px; padding:0 70px 0 14px; border-radius:12px; border:1px solid var(--border);
+  background: var(--card); backdrop-filter: var(--blur); font-size:14px; color:var(--text);
+  transition:border-color .2s,box-shadow .2s,background .2s;
 }
-.search input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(0,113,227,.15);
-}
-.search .hint {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 12px;
-  color: var(--muted);
-  background: #f3f4f6;
-  border-radius: 6px;
-  padding: 2px 6px;
-}
+.search input:focus { outline:none; border-color: var(--primary); box-shadow:0 0 0 4px color-mix(in srgb,var(--primary) 20%,transparent); }
 .search .clear {
-  position: absolute;
-  right: 50px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: var(--muted);
-  font-size: 18px;
-  display: none;
-  background: none;
-  border: none;
+  position:absolute; right:40px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:16px; display:none;
+  background:none; border:none; color:var(--muted);
 }
-.search input:not(:placeholder-shown) ~ .clear { display: block; }
+.search input:not(:placeholder-shown) ~ .clear { display:block; }
+.search .hint {
+  position:absolute; right:10px; top:50%; transform:translateY(-50%);
+  font-size:12px; color:var(--muted); background: rgba(0,0,0,0.05); border-radius:6px; padding:2px 6px;
+}
 
-/* Jump buttons */
-.button-group {
-  max-width: 1200px;
-  margin: 20px auto 0;
-  padding: 0 20px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
+.theme-toggle { cursor:pointer; font-size:18px; color:var(--muted); transition:.2s; }
+.theme-toggle:hover { color: var(--primary); }
+
+main { max-width:1200px; margin:0 auto; padding:28px 20px 40px; }
+
+.button-group { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:28px; }
 .jump-btn {
-  flex: 0 0 auto;
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 6px 14px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: .2s;
+  border:1px solid var(--border); background:var(--card); backdrop-filter: var(--blur);
+  color:var(--text); padding:6px 14px; border-radius:999px; font-size:13px; cursor:pointer; transition:.2s;
 }
-.jump-btn:hover {
-  background: #f3f4f6;
-}
+.jump-btn:hover { border-color:var(--primary); color:var(--primary); }
 
-/* Main */
-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px 20px 40px;
-}
+details { background:var(--card); backdrop-filter:var(--blur); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:16px; }
+summary { font-weight:600; font-size:15px; cursor:pointer; }
+details[open] summary { color:var(--primary); }
 
-details {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow);
-}
-summary {
-  font-weight: 600;
-  font-size: 16px;
-  cursor: pointer;
-}
-details[open] summary { color: var(--primary); }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; margin-top:12px; }
+.card { background:rgba(255,255,255,0.6); border:1px solid var(--border); border-radius:14px; padding:14px 16px; display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit; transition:.2s; }
+[data-theme="dark"] .card { background: rgba(28,28,30,0.6); }
+.card:hover { transform:translateY(-2px); box-shadow:var(--shadow); }
+.card.hidden { display:none; }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-  gap: 14px;
-  margin-top: 14px;
-}
+.icon { width:40px; height:40px; border-radius:10px; background:rgba(0,0,0,0.05); display:flex; align-items:center; justify-content:center; font-weight:600; color:var(--primary); overflow:hidden; flex-shrink:0; font-size:14px; }
+.icon img { width:70%; height:70%; object-fit:contain; }
 
-.card {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 14px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  color: inherit;
-  transition: .2s;
-}
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,.08);
-}
-.card.hidden { display: none; }
+.title { font-weight:600; font-size:14px; }
+.desc { font-size:12px; color:var(--muted); }
 
-.icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: #f3f4f6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  color: var(--primary);
-  overflow: hidden;
-  flex-shrink: 0;
-  font-size: 14px;
-}
-.icon img { width: 70%; height: 70%; object-fit: contain; }
+.no-results { text-align:center; padding:40px 20px; color:var(--muted); }
 
-.title { font-weight: 600; font-size: 14px; }
-.desc { font-size: 12px; color: var(--muted); }
+footer { text-align:center; padding:30px 10px; color:var(--muted); font-size:12px; }
 
-.no-results {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--muted);
-}
-
-@media(max-width:640px){
-  .header-inner { flex-direction: column; align-items: stretch; }
-  .grid { grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); }
-  main { padding: 16px 12px 24px; }
+@media(max-width:640px) {
+  header { flex-wrap:wrap; gap:10px; }
+  .header-right { width:100%; justify-content:space-between; }
+  main { padding:16px 12px 30px; }
 }
 </style>
 </head>
-<body>
+<body data-theme="light">
 
 <header>
-  <div class="header-inner">
-    <div class="logo">UV 导航</div>
+  <h1>🧰 UV 工具箱</h1>
+  <div class="header-right">
     <div class="search">
-      <input id="searchInput" placeholder="搜索站点…" autocomplete="off" />
+      <input id="searchInput" placeholder="搜索工具…" />
       <button class="clear" id="clearBtn">✕</button>
       <div class="hint">⌘K</div>
     </div>
+    <div class="theme-toggle" id="themeToggle">🌙</div>
   </div>
 </header>
 
-<div class="button-group">
+<div class="button-group" style="max-width:1200px;margin:20px auto 0;padding:0 20px;">
+  <button class="jump-btn" data-target="star">⭐ 精选</button>
   <button class="jump-btn" data-target="forum">论坛</button>
   <button class="jump-btn" data-target="dns">域名/DNS</button>
   <button class="jump-btn" data-target="ai">AI 平台</button>
-  <button class="jump-btn" data-target="deploy">应用容器</button>
-  <button class="jump-btn" data-target="tools">工具</button>
+  <button class="jump-btn" data-target="deploy">部署/容器</button>
+  <button class="jump-btn" data-target="tools">监控/工具</button>
 </div>
 
 <main>
 
-<!-- 论坛 -->
-<details id="forum">
-<summary>论坛</summary>
-<div class="grid">
-<a class="card" href="https://linux.do/" target="_blank"><div class="icon">L</div><div><div class="title">linux.do</div><div class="desc">论坛</div></div></a>
-<a class="card" href="https://www.nodeloc.com/" target="_blank"><div class="icon">N</div><div><div class="title">nodeloc</div><div class="desc">论坛</div></div></a>
-<a class="card" href="https://ygkkk.blogspot.com/" target="_blank"><div class="icon">L</div><div><div class="title">甬哥侃侃侃</div><div class="desc">论坛</div></div></a>
-</div>
+<!-- ⭐ 精选 -->
+<details id="star" open>
+  <summary>⭐ 站长精选 / 常用工具</summary>
+  <div class="grid">
+    <a class="card" href="https://chat.openai.com" target="_blank"><div class="icon">C</div><div><div class="title">ChatGPT</div><div class="desc">写代码、文案、查询资料</div></div></a>
+    <a class="card" href="https://www.cloudflare.com" target="_blank"><div class="icon">CF</div><div><div class="title">Cloudflare</div><div class="desc">CDN+DNS+防护</div></div></a>
+    <a class="card" href="https://github.com" target="_blank"><div class="icon">GH</div><div><div class="title">GitHub</div><div class="desc">代码托管、协作</div></div></a>
+    <a class="card" href="https://dnschecker.org" target="_blank"><div class="icon">D</div><div><div class="title">DNSChecker</div><div class="desc">DNS 解析检测</div></div></a>
+    <a class="card" href="https://ayo.94v.net/status/sub" target="_blank"><div class="icon">U</div><div><div class="title">Uptime Kuma</div><div class="desc">监控网站服务状态</div></div></a>
+    <a class="card" href="https://gemini.google.com" target="_blank"><div class="icon">G</div><div><div class="title">Gemini</div><div class="desc">Google 多模态 AI</div></div></a>
+    <a class="card" href="https://www.deepseek.com" target="_blank"><div class="icon">D</div><div><div class="title">DeepSeek</div><div class="desc">模型托管与推理</div></div></a>
+    <a class="card" href="https://dashboard.render.com/login" target="_blank"><div class="icon">R</div><div><div class="title">Render</div><div class="desc">快速部署服务</div></div></a>
+    <a class="card" href="https://signin.koyeb.com" target="_blank"><div class="icon">K</div><div><div class="title">Koyeb</div><div class="desc">云应用部署</div></div></a>
+    <a class="card" href="https://zeabur.app" target="_blank"><div class="icon">Z</div><div><div class="title">Zeabur</div><div class="desc">云应用部署</div></div></a>
+    <a class="card" href="https://huggingface.co/login" target="_blank"><div class="icon">H</div><div><div class="title">Hugging Face</div><div class="desc">模型部署与托管</div></div></a>
+    <a class="card" href="https://www.base64decode.org/zh/" target="_blank"><div class="icon">B</div><div><div class="title">Base64 Decode</div><div class="desc">编码解码工具</div></div></a>
+  </div>
 </details>
 
-<!-- DNS -->
+<!-- 论坛 -->
+<details id="forum">
+  <summary>📘 论坛 & 社区</summary>
+  <div class="grid">
+    <a class="card" href="https://linux.do/" target="_blank"><div class="icon">L</div><div><div class="title">linux.do</div><div class="desc">技术社区，经验交流</div></div></a>
+    <a class="card" href="https://www.nodeloc.com/" target="_blank"><div class="icon">N</div><div><div class="title">nodeloc</div><div class="desc">主机/网络讨论</div></div></a>
+  </div>
+</details>
+
+<!-- 域名/DNS -->
 <details id="dns">
-<summary>域名 / DNS</summary>
-<div class="grid">
-<a class="card" href="https://dnshe.com" target="_blank"><div class="icon">D</div><div><div class="title">DNSHe</div><div class="desc">域名</div></div></a>
-<a class="card" href="https://gv.uy" target="_blank"><div class="icon">G</div><div><div class="title">GV.UY</div><div class="desc">域名</div></div></a>
-<a class="card" href="https://dash.domain.digitalplat.org/auth/login?next=%2F" target="_blank"><div class="icon">D</div><div><div class="title">Digital</div><div class="desc">域名</div></div></a>
-<a class="card" href="https://www.l53.net" target="_blank"><div class="icon">L</div><div><div class="title">L53</div><div class="desc">域名</div></div></a>
-<a class="card" href="https://store.9v4.com/" target="_blank"><div class="icon">94V</div><div><div class="title">94V</div><div class="desc">域名</div></div></a>
-</div>
+  <summary>🌐 域名 / DNS</summary>
+  <div class="grid">
+    <a class="card" href="https://dnshe.com" target="_blank"><div class="icon">D</div><div><div class="title">DNSHe</div><div class="desc">常用 DNS 工具</div></div></a>
+  </div>
 </details>
 
 <!-- AI -->
 <details id="ai">
-<summary>AI 平台</summary>
-<div class="grid">
-<a class="card" href="https://chat.openai.com" target="_blank"><div class="icon">C</div><div><div class="title">ChatGPT</div><div class="desc">OpenAI</div></div></a>
-<a class="card" href="https://gemini.google.com" target="_blank"><div class="icon">G</div><div><div class="title">Gemini</div><div class="desc">Google</div></div></a>
-<a class="card" href="https://www.deepseek.com" target="_blank"><div class="icon">D</div><div><div class="title">DeepSeek</div><div class="desc">模型平台</div></div></a>
-</div>
+  <summary>🤖 AI 平台</summary>
+  <div class="grid">
+    <a class="card" href="https://gemini.google.com" target="_blank"><div class="icon">G</div><div><div class="title">Gemini</div><div class="desc">Google 多模态 AI</div></div></a>
+    <a class="card" href="https://www.deepseek.com" target="_blank"><div class="icon">D</div><div><div class="title">DeepSeek</div><div class="desc">模型托管与推理</div></div></a>
+  </div>
 </details>
 
 <!-- 部署 -->
 <details id="deploy">
-<summary>应用容器</summary>
-<div class="grid">
-<a class="card" href="https://github.com" target="_blank"><div class="icon">GH</div><div><div class="title">GitHub</div><div class="desc">代码托管</div></div></a>
-<a class="card" href="https://dash.cloudflare.com" target="_blank"><div class="icon">CF</div><div><div class="title">Cloudflare</div><div class="desc">CDN / 部署</div></div></a>
-<a class="card" href="https://dashboard.render.com/login" target="_blank"><div class="icon">R</div><div><div class="title">Render</div><div class="desc">应用部署</div></div></a>
-<a class="card" href="https://signin.koyeb.com" target="_blank"><div class="icon">K</div><div><div class="title">Koyeb</div><div class="desc">应用部署</div></div></a>
-<a class="card" href="https://zeabur.app" target="_blank"><div class="icon">Z</div><div><div class="title">Zeabur</div><div class="desc">应用部署</div></div></a>
-<a class="card" href="https://run.claw.cloud" target="_blank"><div class="icon">C</div><div><div class="title">ClawCloud</div><div class="desc">应用部署</div></div></a>
-<a class="card" href="https://leaflow.net/login" target="_blank"><div class="icon">L</div><div><div class="title">Leaflow</div><div class="desc">应用部署</div></div></a>
-<a class="card" href="https://huggingface.co/login" target="_blank"><div class="icon">H</div><div><div class="title">Hugging Face</div><div class="desc">应用部署</div></div></a>
-<a class="card" href="https://www.sap.com/products/technology-platform/trial.html" target="_blank"><div class="icon">S</div><div><div class="title">SAP</div><div class="desc">应用部署</div></div></a>
-</div>
+  <summary>📦 部署 / 容器</summary>
+  <div class="grid">
+    <a class="card" href="https://dashboard.render.com/login" target="_blank"><div class="icon">R</div><div><div class="title">Render</div><div class="desc">快速部署服务</div></div></a>
+  </div>
 </details>
 
 <!-- 工具 -->
 <details id="tools">
-<summary>监控 / 解码 / 检测</summary>
-<div class="grid">
-<a class="card" href="https://ayo.94v.net/status/sub" target="_blank"><div class="icon">U</div><div><div class="title">Uptime Kuma</div><div class="desc">服务监控</div></div></a>
-<a class="card" href="https://www.cloudflare.com/cdn-cgi/trace" target="_blank"><div class="icon">CF</div><div><div class="title">CF Trace</div><div class="desc">网络检测</div></div></a>
-<a class="card" href="https://ippure.com" target="_blank"><div class="icon">I</div><div><div class="title">IPPure</div><div class="desc">IP 查询</div></div></a>
-<a class="card" href="https://scamalytics.com" target="_blank"><div class="icon">S</div><div><div class="title">Scamalytics</div><div class="desc">风险分析</div></div></a>
-<a class="card" href="https://dnschecker.org" target="_blank"><div class="icon">D</div><div><div class="title">DNSChecker</div><div class="desc">DNS 检测</div></div></a>
-<a class="card" href="https://proxyip.chatkg.qzz.io" target="_blank"><div class="icon">P</div><div><div class="title">ProxyIP</div><div class="desc">代理检测</div></div></a>
-<a class="card" href="https://www.base64decode.org/zh/" target="_blank"><div class="icon">B</div><div><div class="title">Base64 Decode</div><div class="desc">编码解码</div></div></a>
-<a class="card" href="https://obfuscator.io/legacy-playground" target="_blank"><div class="icon">JS</div><div><div class="title">Obfuscator</div><div class="desc">JS 混淆</div></div></a>
-<a class="card" href="https://toolbox.googleapps.com/apps/dig/#A/" target="_blank"><div class="icon">JS</div><div><div class="title">DNS lookup</div><div class="desc">A 记录</div></div></a>
-</div>
+  <summary>📊 监控 / 工具</summary>
+  <div class="grid">
+    <a class="card" href="https://ayo.94v.net/status/sub" target="_blank"><div class="icon">U</div><div><div class="title">Uptime Kuma</div><div class="desc">服务监控</div></div></a>
+  </div>
 </details>
 
-<div class="no-results" id="noResults" style="display:none;">没有找到匹配的站点</div>
-
+<div class="no-results" id="noResults" style="display:none;">没有找到匹配的工具 😢</div>
 </main>
 
+<footer>© 2026 UV 工具箱</footer>
+
 <script>
-const searchInput = document.getElementById('searchInput');
-const clearBtn = document.getElementById('clearBtn');
-const cards = document.querySelectorAll('.card');
-const details = document.querySelectorAll('details');
-const noResults = document.getElementById('noResults');
-
-document.addEventListener('keydown', e => {
-  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-    e.preventDefault();
-    searchInput.focus();
-  }
-  if (e.key === 'Escape' && searchInput.value) {
-    searchInput.value = '';
-    performSearch();
-  }
+// 主题切换
+const themeToggle=document.getElementById('themeToggle');
+themeToggle.addEventListener('click',()=>{
+  const theme=document.body.getAttribute('data-theme');
+  if(theme==='light'){ document.body.setAttribute('data-theme','dark'); themeToggle.textContent='☀️'; }
+  else{ document.body.setAttribute('data-theme','light'); themeToggle.textContent='🌙'; }
 });
-clearBtn.addEventListener('click', () => {
-  searchInput.value = '';
-  performSearch();
+
+// 搜索
+const searchInput=document.getElementById('searchInput');
+const clearBtn=document.getElementById('clearBtn');
+const cards=document.querySelectorAll('.card');
+const detailsEls=document.querySelectorAll('details');
+const noResults=document.getElementById('noResults');
+
+document.addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key==='k'){ e.preventDefault(); searchInput.focus(); }
+  if(e.key==='Escape'&&searchInput.value){ searchInput.value=''; performSearch(); searchInput.focus(); }
 });
-searchInput.addEventListener('input', performSearch);
 
-function performSearch() {
-  const query = searchInput.value.trim().toLowerCase();
-  let visibleCount = 0;
-  const visibleDetails = new Set();
+clearBtn.addEventListener('click',()=>{ searchInput.value=''; performSearch(); searchInput.focus(); });
+searchInput.addEventListener('input',performSearch);
 
-  cards.forEach(card => {
-    const text = card.innerText.toLowerCase();
-    const isMatch = !query || text.includes(query);
-    if (isMatch) {
-      card.classList.remove('hidden');
-      visibleCount++;
-      const detail = card.closest('details');
-      if (detail) visibleDetails.add(detail);
-    } else {
-      card.classList.add('hidden');
-    }
+function performSearch(){
+  const query=searchInput.value.trim().toLowerCase();
+  let visibleCount=0;
+  const visibleDetails=new Set();
+  cards.forEach(card=>{
+    const text=card.innerText.toLowerCase();
+    const isMatch=!query||text.includes(query);
+    if(isMatch){ card.classList.remove('hidden'); visibleCount++; visibleDetails.add(card.closest('details')); }
+    else card.classList.add('hidden');
   });
-
-  details.forEach(detail => {
-    detail.style.display = (!query || visibleDetails.has(detail)) ? '' : 'none';
-  });
-
-  noResults.style.display = (query && visibleCount === 0) ? 'block' : 'none';
+  detailsEls.forEach(d=>{ d.style.display = (!query||visibleDetails.has(d))?'':'none'; });
+  noResults.style.display=(query&&visibleCount===0)?'block':'none';
 }
 
-// 跳转按钮
-document.querySelectorAll('.jump-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const targetId = btn.dataset.target;
-    const detail = document.getElementById(targetId);
-    if (detail) {
-      const isOpen = detail.open;
-      document.querySelectorAll('details').forEach(d => d.open = false);
-      detail.open = !isOpen;
-      if (!isOpen) detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+// 分类按钮跳转
+document.querySelectorAll('.jump-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const targetId=btn.dataset.target;
+    const detail=document.getElementById(targetId);
+    if(detail){
+      const isOpen=detail.open;
+      detailsEls.forEach(d=>d.open=false);
+      detail.open=!isOpen;
+      if(!isOpen) detail.scrollIntoView({behavior:'smooth', block:'start'});
     }
   });
 });
 
-// favicon
-document.querySelectorAll('.icon').forEach(icon => {
-  const link = icon.closest('a');
-  if (!link) return;
+// favicon 自动加载
+document.querySelectorAll('.icon').forEach(icon=>{
+  const link=icon.closest('a');
+  if(!link) return;
   let url;
-  try { url = new URL(link.href).origin + '/favicon.ico'; } catch { return; }
-  const img = document.createElement('img');
-  img.src = url;
-  img.onload = () => { icon.textContent=''; icon.appendChild(img); };
+  try{ url=new URL(link.href).origin+'/favicon.ico'; }catch{return;}
+  const img=document.createElement('img');
+  img.src=url; img.alt='';
+  img.onload=()=>{ icon.textContent=''; icon.appendChild(img); };
 });
 </script>
 
