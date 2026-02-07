@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🧰 UV 工具箱 </title>
+<title>🧰 UV 工具箱</title>
 <style>
 :root {
   --bg: #f5f5f7;
@@ -41,42 +41,39 @@ header {
   background: color-mix(in srgb,var(--bg) 80%,transparent);
   border-bottom:1px solid var(--border);
   padding:14px 20px;
+}
+
+.header-container {
+  max-width:1200px;
+  margin:0 auto;
   display:flex;
-  flex-direction:column;
   align-items:center;
-  gap:16px;
+  gap:20px;
 }
 
 /* 标题区域 */
 .title-section {
-  text-align:center;
-  width:100%;
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
 .title-section h1 {
-  font-size:clamp(24px, 4vw, 32px);
+  font-size:clamp(20px, 3vw, 26px);
   font-weight:700;
   letter-spacing:-0.5px;
-  margin-bottom:8px;
   background:linear-gradient(135deg, var(--primary) 0%, #34c759 100%);
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
 }
-.title-section p {
-  font-size:clamp(14px, 2vw, 16px);
-  color:var(--muted);
-  max-width:600px;
-  margin:0 auto;
-  line-height:1.5;
-}
 
-/* 控制栏 */
+/* 搜索和切换按钮区域 */
 .header-controls {
-  width:100%;
-  max-width:800px;
   display:flex;
   align-items:center;
   gap:12px;
+  flex:1;
+  max-width:600px;
 }
 
 /* 搜索框 */
@@ -126,6 +123,9 @@ header {
   border-radius:6px;
   padding:2px 6px;
 }
+[data-theme="dark"] .search .hint {
+  background: rgba(255,255,255,0.1);
+}
 
 .theme-toggle {
   cursor:pointer;
@@ -153,175 +153,6 @@ main {
   max-width:1200px; 
   margin:0 auto; 
   padding:20px; 
-}
-
-/* 站长精选 */
-.featured-section {
-  margin-bottom:28px;
-}
-.featured-header {
-  text-align:center;
-  margin-bottom:20px;
-}
-.featured-header h2 {
-  font-size:clamp(20px, 3vw, 26px);
-  font-weight:700;
-  color:var(--text);
-  margin-bottom:8px;
-}
-.featured-header p {
-  font-size:clamp(13px, 1.5vw, 15px);
-  color:var(--muted);
-  max-width:500px;
-  margin:0 auto;
-}
-.featured-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
-  gap:16px;
-}
-
-/* 状态监控面板 */
-.status-panel {
-  margin:40px 0 32px 0;
-  background:var(--card);
-  backdrop-filter:var(--blur);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:24px;
-  box-shadow:var(--shadow);
-}
-.status-header {
-  text-align:center;
-  margin-bottom:24px;
-}
-.status-header h2 {
-  font-size:clamp(20px, 3vw, 26px);
-  font-weight:700;
-  color:var(--text);
-  margin-bottom:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-}
-.status-controls {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
-  margin-top:16px;
-}
-.status-refresh {
-  background:var(--primary);
-  color:white;
-  border:none;
-  border-radius:10px;
-  padding:10px 20px;
-  font-size:14px;
-  font-weight:500;
-  cursor:pointer;
-  transition:.2s;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-.status-refresh:hover {
-  background:color-mix(in srgb, var(--primary) 90%, black);
-  transform:translateY(-1px);
-}
-.status-refresh.loading {
-  opacity:0.7;
-  cursor:not-allowed;
-}
-.status-refresh.loading .refresh-icon {
-  animation:spin 1s linear infinite;
-}
-.status-info {
-  text-align:center;
-  font-size:14px;
-  color:var(--muted);
-  margin-top:8px;
-}
-.status-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
-  gap:16px;
-}
-.status-card {
-  background: rgba(255,255,255,0.5);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:18px;
-  display:flex;
-  align-items:center;
-  gap:14px;
-  transition:.2s;
-}
-[data-theme="dark"] .status-card {
-  background: rgba(28,28,30,0.5);
-}
-.status-card:hover {
-  transform:translateY(-2px);
-  box-shadow:var(--shadow);
-}
-.status-indicator {
-  width:12px;
-  height:12px;
-  border-radius:50%;
-  flex-shrink:0;
-}
-.status-indicator.up {
-  background:var(--success);
-  box-shadow:0 0 0 3px rgba(48,209,88,0.2);
-}
-.status-indicator.down {
-  background:var(--danger);
-  box-shadow:0 0 0 3px rgba(255,69,58,0.2);
-}
-.status-info-content { flex:1;}
-.status-name {
-  font-weight:600;
-  font-size:15px;
-  margin-bottom:4px;
-}
-.status-details {
-  font-size:13px;
-  color:var(--muted);
-}
-.status-time {
-  font-size:12px;
-  color:var(--muted);
-  text-align:right;
-  min-width:60px;
-}
-.status-error {
-  grid-column:1/-1;
-  text-align:center;
-  padding:40px 20px;
-  color:var(--muted);
-  font-size:15px;
-}
-
-/* 可折叠分类区域 */
-.categories-section {
-  margin-top:40px;
-}
-.categories-header {
-  text-align:center;
-  margin-bottom:30px;
-}
-.categories-header h3 {
-  font-size:clamp(18px, 2.5vw, 24px);
-  font-weight:700;
-  color:var(--text);
-  margin-bottom:8px;
-}
-.categories-header p {
-  font-size:clamp(13px, 1.5vw, 15px);
-  color:var(--muted);
-  max-width:600px;
-  margin:0 auto;
 }
 
 /* 可折叠分类 */
@@ -443,22 +274,6 @@ footer {
   border-top:1px solid var(--border);
   margin-top:40px;
 }
-.footer-links {
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  margin-bottom:15px;
-  flex-wrap:wrap;
-}
-.footer-link {
-  color:var(--muted);
-  text-decoration:none;
-  font-size:13px;
-  transition:.2s;
-}
-.footer-link:hover {
-  color:var(--primary);
-}
 
 /* 无搜索结果提示 */
 .no-results {
@@ -469,57 +284,24 @@ footer {
   grid-column:1/-1;
 }
 
-/* 动画 */
-@keyframes spin {
-  from { transform:rotate(0deg); }
-  to { transform:rotate(360deg); }
-}
-
 /* 响应式设计 */
 @media (max-width: 768px) {
-  header {
-    padding:16px;
+  .header-container {
+    flex-direction:column;
+    align-items:stretch;
     gap:12px;
   }
   
   .header-controls {
-    flex-direction:column;
-    gap:10px;
-  }
-  
-  .search {
-    width:100%;
-  }
-  
-  .theme-toggle {
-    align-self:flex-end;
-    margin-top:-52px;
-    position:relative;
-    top:52px;
+    max-width:none;
   }
   
   main {
     padding:16px;
   }
   
-  .featured-grid,
-  .status-grid,
   .tools-grid {
     grid-template-columns:1fr;
-  }
-  
-  .status-panel {
-    padding:20px;
-  }
-  
-  .status-controls {
-    flex-direction:column;
-    align-items:stretch;
-  }
-  
-  .status-refresh {
-    width:100%;
-    justify-content:center;
   }
   
   details {
@@ -529,22 +311,11 @@ footer {
 
 @media (max-width: 480px) {
   .title-section h1 {
-    font-size:22px;
+    font-size:20px;
   }
   
-  .title-section p {
-    font-size:14px;
-  }
-  
-  .featured-header h2,
-  .status-header h2,
-  .categories-header h3 {
-    font-size:18px;
-  }
-  
-  .status-card,
   .tool-card {
-    padding:14px;
+    padding:12px;
   }
 }
 </style>
@@ -552,422 +323,268 @@ footer {
 <body data-theme="light">
 
 <header>
-  <div class="title-section">
-    <h1>🧰 UV 工具箱 · 专业版</h1>
-    <p>一站式运维工具导航与实时服务状态监控平台</p>
-  </div>
-  
-  <div class="header-controls">
-    <div class="search">
-      <input id="searchInput" placeholder="搜索工具或服务…" />
-      <button class="clear" id="clearBtn">✕</button>
-      <div class="hint">⌘K</div>
+  <div class="header-container">
+    <div class="title-section">
+      <h1>🧰 UV 工具箱</h1>
     </div>
-    <div class="theme-toggle" id="themeToggle">🌙</div>
+    <div class="header-controls">
+      <div class="search">
+        <input id="searchInput" placeholder="搜索工具或服务…" />
+        <button class="clear" id="clearBtn">✕</button>
+        <div class="hint">⌘K</div>
+      </div>
+      <div class="theme-toggle" id="themeToggle">🌙</div>
+    </div>
   </div>
 </header>
 
 <main>
-  <!-- 站长精选 -->
-  <section class="featured-section">
-    <div class="featured-header">
-      <h2>⭐ 站长精选</h2>
-      <p>最常用、最核心的工具推荐</p>
+  <!-- 论坛 & 社区 -->
+  <details>
+    <summary>📘 论坛 & 社区</summary>
+    <div class="tools-grid">
+      <a class="tool-card" href="https://linux.do/" target="_blank" data-title="linux.do" data-desc="论坛">
+        <div class="tool-icon">L</div>
+        <div class="tool-info">
+          <div class="tool-name">linux.do</div>
+          <div class="tool-desc">论坛</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://www.nodeloc.com/" target="_blank" data-title="nodeloc" data-desc="论坛">
+        <div class="tool-icon">N</div>
+        <div class="tool-info">
+          <div class="tool-name">nodeloc</div>
+          <div class="tool-desc">论坛</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://ygkkk.blogspot.com/" target="_blank" data-title="甬哥侃侃侃" data-desc="论坛">
+        <div class="tool-icon">L</div>
+        <div class="tool-info">
+          <div class="tool-name">甬哥侃侃侃</div>
+          <div class="tool-desc">论坛</div>
+        </div>
+      </a>
     </div>
-    <div class="featured-grid">
-      <a class="tool-card" href="https://chat.openai.com" target="_blank" data-title="ChatGPT" data-desc="日常必开，写代码、文案、查询资料">
+  </details>
+
+  <!-- 域名 / DNS -->
+  <details>
+    <summary>🌐 域名 / DNS</summary>
+    <div class="tools-grid">
+      <a class="tool-card" href="https://dnshe.com" target="_blank" data-title="DNSHe" data-desc="域名">
+        <div class="tool-icon">D</div>
+        <div class="tool-info">
+          <div class="tool-name">DNSHe</div>
+          <div class="tool-desc">域名</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://gv.uy" target="_blank" data-title="GV.UY" data-desc="域名">
+        <div class="tool-icon">G</div>
+        <div class="tool-info">
+          <div class="tool-name">GV.UY</div>
+          <div class="tool-desc">域名</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://dash.domain.digitalplat.org/auth/login?next=%2F" target="_blank" data-title="Digital" data-desc="域名">
+        <div class="tool-icon">D</div>
+        <div class="tool-info">
+          <div class="tool-name">Digital</div>
+          <div class="tool-desc">域名</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://www.l53.net" target="_blank" data-title="L53" data-desc="域名">
+        <div class="tool-icon">L</div>
+        <div class="tool-info">
+          <div class="tool-name">L53</div>
+          <div class="tool-desc">域名</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://store.9v4.com/" target="_blank" data-title="94V" data-desc="域名">
+        <div class="tool-icon">94V</div>
+        <div class="tool-info">
+          <div class="tool-name">94V</div>
+          <div class="tool-desc">域名</div>
+        </div>
+      </a>
+    </div>
+  </details>
+
+  <!-- AI 平台 -->
+  <details>
+    <summary>🤖 AI 平台</summary>
+    <div class="tools-grid">
+      <a class="tool-card" href="https://chat.openai.com" target="_blank" data-title="ChatGPT" data-desc="OpenAI">
         <div class="tool-icon">C</div>
         <div class="tool-info">
           <div class="tool-name">ChatGPT</div>
-          <div class="tool-desc">日常必开，写代码、文案、查询资料</div>
+          <div class="tool-desc">OpenAI</div>
         </div>
       </a>
-      <a class="tool-card" href="https://dash.cloudflare.com" target="_blank" data-title="Cloudflare" data-desc="CDN+DNS+防护，一站式网络基础设施">
-        <div class="tool-icon">CF</div>
+      <a class="tool-card" href="https://gemini.google.com" target="_blank" data-title="Gemini" data-desc="Google">
+        <div class="tool-icon">G</div>
         <div class="tool-info">
-          <div class="tool-name">Cloudflare</div>
-          <div class="tool-desc">CDN+DNS+防护，一站式网络基础设施</div>
+          <div class="tool-name">Gemini</div>
+          <div class="tool-desc">Google</div>
         </div>
       </a>
-      <a class="tool-card" href="https://www.deepseek.com" target="_blank" data-title="DeepSeek" data-desc="AI 助手，代码与文案创作">
+      <a class="tool-card" href="https://www.deepseek.com" target="_blank" data-title="DeepSeek" data-desc="模型平台">
         <div class="tool-icon">D</div>
         <div class="tool-info">
           <div class="tool-name">DeepSeek</div>
-          <div class="tool-desc">AI 助手，代码与文案创作</div>
+          <div class="tool-desc">模型平台</div>
         </div>
       </a>
-      <a class="tool-card" href="https://ayo.94v.net/status/sub" target="_blank" data-title="Uptime Kuma" data-desc="服务监控，实时状态检测">
+    </div>
+  </details>
+
+  <!-- 应用容器 -->
+  <details>
+    <summary>📦 应用容器</summary>
+    <div class="tools-grid">
+      <a class="tool-card" href="https://github.com" target="_blank" data-title="GitHub" data-desc="代码托管">
+        <div class="tool-icon">GH</div>
+        <div class="tool-info">
+          <div class="tool-name">GitHub</div>
+          <div class="tool-desc">代码托管</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://dash.cloudflare.com" target="_blank" data-title="Cloudflare" data-desc="CDN / 部署">
+        <div class="tool-icon">CF</div>
+        <div class="tool-info">
+          <div class="tool-name">Cloudflare</div>
+          <div class="tool-desc">CDN / 部署</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://dashboard.render.com/login" target="_blank" data-title="Render" data-desc="应用部署">
+        <div class="tool-icon">R</div>
+        <div class="tool-info">
+          <div class="tool-name">Render</div>
+          <div class="tool-desc">应用部署</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://signin.koyeb.com" target="_blank" data-title="Koyeb" data-desc="应用部署">
+        <div class="tool-icon">K</div>
+        <div class="tool-info">
+          <div class="tool-name">Koyeb</div>
+          <div class="tool-desc">应用部署</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://zeabur.app" target="_blank" data-title="Zeabur" data-desc="应用部署">
+        <div class="tool-icon">Z</div>
+        <div class="tool-info">
+          <div class="tool-name">Zeabur</div>
+          <div class="tool-desc">应用部署</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://run.claw.cloud" target="_blank" data-title="ClawCloud" data-desc="应用部署">
+        <div class="tool-icon">C</div>
+        <div class="tool-info">
+          <div class="tool-name">ClawCloud</div>
+          <div class="tool-desc">应用部署</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://leaflow.net/login" target="_blank" data-title="Leaflow" data-desc="应用部署">
+        <div class="tool-icon">L</div>
+        <div class="tool-info">
+          <div class="tool-name">Leaflow</div>
+          <div class="tool-desc">应用部署</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://huggingface.co/login" target="_blank" data-title="Hugging Face" data-desc="应用部署">
+        <div class="tool-icon">H</div>
+        <div class="tool-info">
+          <div class="tool-name">Hugging Face</div>
+          <div class="tool-desc">应用部署</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://www.sap.com/products/technology-platform/trial.html" target="_blank" data-title="SAP" data-desc="应用部署">
+        <div class="tool-icon">S</div>
+        <div class="tool-info">
+          <div class="tool-name">SAP</div>
+          <div class="tool-desc">应用部署</div>
+        </div>
+      </a>
+    </div>
+  </details>
+
+  <!-- 监控 / 解码 / 检测 -->
+  <details>
+    <summary>📊 监控 / 解码 / 检测</summary>
+    <div class="tools-grid">
+      <a class="tool-card" href="https://ayo.94v.net/status/sub" target="_blank" data-title="Uptime Kuma" data-desc="服务监控">
         <div class="tool-icon">U</div>
         <div class="tool-info">
           <div class="tool-name">Uptime Kuma</div>
-          <div class="tool-desc">服务监控，实时状态检测</div>
+          <div class="tool-desc">服务监控</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://www.cloudflare.com/cdn-cgi/trace" target="_blank" data-title="CF Trace" data-desc="网络检测">
+        <div class="tool-icon">CF</div>
+        <div class="tool-info">
+          <div class="tool-name">CF Trace</div>
+          <div class="tool-desc">网络检测</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://ippure.com" target="_blank" data-title="IPPure" data-desc="IP 查询">
+        <div class="tool-icon">I</div>
+        <div class="tool-info">
+          <div class="tool-name">IPPure</div>
+          <div class="tool-desc">IP 查询</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://scamalytics.com" target="_blank" data-title="Scamalytics" data-desc="风险分析">
+        <div class="tool-icon">S</div>
+        <div class="tool-info">
+          <div class="tool-name">Scamalytics</div>
+          <div class="tool-desc">风险分析</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://dnschecker.org" target="_blank" data-title="DNSChecker" data-desc="DNS 检测">
+        <div class="tool-icon">D</div>
+        <div class="tool-info">
+          <div class="tool-name">DNSChecker</div>
+          <div class="tool-desc">DNS 检测</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://proxyip.chatkg.qzz.io" target="_blank" data-title="ProxyIP" data-desc="代理检测">
+        <div class="tool-icon">P</div>
+        <div class="tool-info">
+          <div class="tool-name">ProxyIP</div>
+          <div class="tool-desc">代理检测</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://www.base64decode.org/zh/" target="_blank" data-title="Base64 Decode" data-desc="编码解码">
+        <div class="tool-icon">B</div>
+        <div class="tool-info">
+          <div class="tool-name">Base64 Decode</div>
+          <div class="tool-desc">编码解码</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://obfuscator.io/legacy-playground" target="_blank" data-title="Obfuscator" data-desc="JS 混淆">
+        <div class="tool-icon">JS</div>
+        <div class="tool-info">
+          <div class="tool-name">Obfuscator</div>
+          <div class="tool-desc">JS 混淆</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://toolbox.googleapps.com/apps/dig/#A/" target="_blank" data-title="DNS lookup" data-desc="A 记录查询">
+        <div class="tool-icon">JS</div>
+        <div class="tool-info">
+          <div class="tool-name">DNS lookup</div>
+          <div class="tool-desc">A 记录查询</div>
         </div>
       </a>
     </div>
-  </section>
-
-  <!-- 状态监控面板 -->
-  <section class="status-panel">
-    <div class="status-header">
-      <h2>📊 服务状态监控</h2>
-      <p>实时监控所有关键服务的运行状态与健康度</p>
-      <div class="status-controls">
-        <button class="status-refresh" id="refreshStatus">
-          <span class="refresh-icon">↻</span>
-          <span>刷新状态</span>
-        </button>
-      </div>
-      <div class="status-info">
-        数据源: Uptime Kuma | 最后更新: <span id="lastUpdateTime">正在加载...</span>
-      </div>
-    </div>
-    <div class="status-grid" id="statusGrid">
-      <!-- 状态卡片会动态加载到这里 -->
-      <div class="status-error">正在加载状态信息...</div>
-    </div>
-  </section>
-
-  <!-- 可折叠分类 -->
-  <section class="categories-section">
-    <div class="categories-header">
-      <h3>📚 工具分类</h3>
-      <p>点击分类名称展开或折叠工具列表</p>
-    </div>
-
-    <!-- 论坛 & 社区 -->
-    <details open>
-      <summary>📘 论坛 & 社区</summary>
-      <div class="tools-grid">
-        <a class="tool-card" href="https://linux.do/" target="_blank" data-title="linux.do" data-desc="论坛">
-          <div class="tool-icon">L</div>
-          <div class="tool-info">
-            <div class="tool-name">linux.do</div>
-            <div class="tool-desc">论坛</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://www.nodeloc.com/" target="_blank" data-title="nodeloc" data-desc="论坛">
-          <div class="tool-icon">N</div>
-          <div class="tool-info">
-            <div class="tool-name">nodeloc</div>
-            <div class="tool-desc">论坛</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://ygkkk.blogspot.com/" target="_blank" data-title="甬哥侃侃侃" data-desc="论坛">
-          <div class="tool-icon">L</div>
-          <div class="tool-info">
-            <div class="tool-name">甬哥侃侃侃</div>
-            <div class="tool-desc">论坛</div>
-          </div>
-        </a>
-      </div>
-    </details>
-
-    <!-- 域名 / DNS -->
-    <details open>
-      <summary>🌐 域名 / DNS</summary>
-      <div class="tools-grid">
-        <a class="tool-card" href="https://dnshe.com" target="_blank" data-title="DNSHe" data-desc="域名">
-          <div class="tool-icon">D</div>
-          <div class="tool-info">
-            <div class="tool-name">DNSHe</div>
-            <div class="tool-desc">域名</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://gv.uy" target="_blank" data-title="GV.UY" data-desc="域名">
-          <div class="tool-icon">G</div>
-          <div class="tool-info">
-            <div class="tool-name">GV.UY</div>
-            <div class="tool-desc">域名</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://dash.domain.digitalplat.org/auth/login?next=%2F" target="_blank" data-title="Digital" data-desc="域名">
-          <div class="tool-icon">D</div>
-          <div class="tool-info">
-            <div class="tool-name">Digital</div>
-            <div class="tool-desc">域名</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://www.l53.net" target="_blank" data-title="L53" data-desc="域名">
-          <div class="tool-icon">L</div>
-          <div class="tool-info">
-            <div class="tool-name">L53</div>
-            <div class="tool-desc">域名</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://store.9v4.com/" target="_blank" data-title="94V" data-desc="域名">
-          <div class="tool-icon">94V</div>
-          <div class="tool-info">
-            <div class="tool-name">94V</div>
-            <div class="tool-desc">域名</div>
-          </div>
-        </a>
-      </div>
-    </details>
-
-    <!-- AI 平台 -->
-    <details open>
-      <summary>🤖 AI 平台</summary>
-      <div class="tools-grid">
-        <a class="tool-card" href="https://chat.openai.com" target="_blank" data-title="ChatGPT" data-desc="OpenAI">
-          <div class="tool-icon">C</div>
-          <div class="tool-info">
-            <div class="tool-name">ChatGPT</div>
-            <div class="tool-desc">OpenAI</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://gemini.google.com" target="_blank" data-title="Gemini" data-desc="Google">
-          <div class="tool-icon">G</div>
-          <div class="tool-info">
-            <div class="tool-name">Gemini</div>
-            <div class="tool-desc">Google</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://www.deepseek.com" target="_blank" data-title="DeepSeek" data-desc="模型平台">
-          <div class="tool-icon">D</div>
-          <div class="tool-info">
-            <div class="tool-name">DeepSeek</div>
-            <div class="tool-desc">模型平台</div>
-          </div>
-        </a>
-      </div>
-    </details>
-
-    <!-- 应用容器 -->
-    <details open>
-      <summary>📦 应用容器</summary>
-      <div class="tools-grid">
-        <a class="tool-card" href="https://github.com" target="_blank" data-title="GitHub" data-desc="代码托管">
-          <div class="tool-icon">GH</div>
-          <div class="tool-info">
-            <div class="tool-name">GitHub</div>
-            <div class="tool-desc">代码托管</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://dash.cloudflare.com" target="_blank" data-title="Cloudflare" data-desc="CDN / 部署">
-          <div class="tool-icon">CF</div>
-          <div class="tool-info">
-            <div class="tool-name">Cloudflare</div>
-            <div class="tool-desc">CDN / 部署</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://dashboard.render.com/login" target="_blank" data-title="Render" data-desc="应用部署">
-          <div class="tool-icon">R</div>
-          <div class="tool-info">
-            <div class="tool-name">Render</div>
-            <div class="tool-desc">应用部署</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://signin.koyeb.com" target="_blank" data-title="Koyeb" data-desc="应用部署">
-          <div class="tool-icon">K</div>
-          <div class="tool-info">
-            <div class="tool-name">Koyeb</div>
-            <div class="tool-desc">应用部署</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://zeabur.app" target="_blank" data-title="Zeabur" data-desc="应用部署">
-          <div class="tool-icon">Z</div>
-          <div class="tool-info">
-            <div class="tool-name">Zeabur</div>
-            <div class="tool-desc">应用部署</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://run.claw.cloud" target="_blank" data-title="ClawCloud" data-desc="应用部署">
-          <div class="tool-icon">C</div>
-          <div class="tool-info">
-            <div class="tool-name">ClawCloud</div>
-            <div class="tool-desc">应用部署</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://leaflow.net/login" target="_blank" data-title="Leaflow" data-desc="应用部署">
-          <div class="tool-icon">L</div>
-          <div class="tool-info">
-            <div class="tool-name">Leaflow</div>
-            <div class="tool-desc">应用部署</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://huggingface.co/login" target="_blank" data-title="Hugging Face" data-desc="应用部署">
-          <div class="tool-icon">H</div>
-          <div class="tool-info">
-            <div class="tool-name">Hugging Face</div>
-            <div class="tool-desc">应用部署</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://www.sap.com/products/technology-platform/trial.html" target="_blank" data-title="SAP" data-desc="应用部署">
-          <div class="tool-icon">S</div>
-          <div class="tool-info">
-            <div class="tool-name">SAP</div>
-            <div class="tool-desc">应用部署</div>
-          </div>
-        </a>
-      </div>
-    </details>
-
-    <!-- 监控 / 解码 / 检测 -->
-    <details open>
-      <summary>📊 监控 / 解码 / 检测</summary>
-      <div class="tools-grid">
-        <a class="tool-card" href="https://ayo.94v.net/status/sub" target="_blank" data-title="Uptime Kuma" data-desc="服务监控">
-          <div class="tool-icon">U</div>
-          <div class="tool-info">
-            <div class="tool-name">Uptime Kuma</div>
-            <div class="tool-desc">服务监控</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://www.cloudflare.com/cdn-cgi/trace" target="_blank" data-title="CF Trace" data-desc="网络检测">
-          <div class="tool-icon">CF</div>
-          <div class="tool-info">
-            <div class="tool-name">CF Trace</div>
-            <div class="tool-desc">网络检测</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://ippure.com" target="_blank" data-title="IPPure" data-desc="IP 查询">
-          <div class="tool-icon">I</div>
-          <div class="tool-info">
-            <div class="tool-name">IPPure</div>
-            <div class="tool-desc">IP 查询</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://scamalytics.com" target="_blank" data-title="Scamalytics" data-desc="风险分析">
-          <div class="tool-icon">S</div>
-          <div class="tool-info">
-            <div class="tool-name">Scamalytics</div>
-            <div class="tool-desc">风险分析</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://dnschecker.org" target="_blank" data-title="DNSChecker" data-desc="DNS 检测">
-          <div class="tool-icon">D</div>
-          <div class="tool-info">
-            <div class="tool-name">DNSChecker</div>
-            <div class="tool-desc">DNS 检测</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://proxyip.chatkg.qzz.io" target="_blank" data-title="ProxyIP" data-desc="代理检测">
-          <div class="tool-icon">P</div>
-          <div class="tool-info">
-            <div class="tool-name">ProxyIP</div>
-            <div class="tool-desc">代理检测</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://www.base64decode.org/zh/" target="_blank" data-title="Base64 Decode" data-desc="编码解码">
-          <div class="tool-icon">B</div>
-          <div class="tool-info">
-            <div class="tool-name">Base64 Decode</div>
-            <div class="tool-desc">编码解码</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://obfuscator.io/legacy-playground" target="_blank" data-title="Obfuscator" data-desc="JS 混淆">
-          <div class="tool-icon">JS</div>
-          <div class="tool-info">
-            <div class="tool-name">Obfuscator</div>
-            <div class="tool-desc">JS 混淆</div>
-          </div>
-        </a>
-        <a class="tool-card" href="https://toolbox.googleapps.com/apps/dig/#A/" target="_blank" data-title="DNS lookup" data-desc="A 记录查询">
-          <div class="tool-icon">JS</div>
-          <div class="tool-info">
-            <div class="tool-name">DNS lookup</div>
-            <div class="tool-desc">A 记录查询</div>
-          </div>
-        </a>
-      </div>
-    </details>
-  </section>
+  </details>
 
   <div class="no-results" id="noResults" style="display:none;">没有找到匹配的工具 😢</div>
 </main>
 
 <footer>
-  <div class="footer-links">
-    <a href="https://ayo.94v.net/status/sub" target="_blank" class="footer-link">状态监控</a>
-    <a href="#" class="footer-link">使用帮助</a>
-    <a href="#" class="footer-link">关于我们</a>
-    <a href="#" class="footer-link">反馈建议</a>
-  </div>
   <p>© 2024 UV 工具箱 · 专业版 | 一站式运维工具导航平台</p>
 </footer>
 
 <script>
-// ========== 状态监控模块 ==========
-class StatusMonitor {
-  constructor() {
-    this.lastUpdate = null;
-    this.statusData = null;
-  }
-
-  async fetchStatus() {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        const mockData = {
-          lastUpdate: new Date().toISOString(),
-          monitors: [
-            { name: 'Uptime Kuma', uptime: '100%', lastCheck: '21m ago', status: 'up' },
-            { name: 'Navigation', uptime: '98.9%', lastCheck: '22m ago', status: 'up' },
-            { name: 'Leaflow（🇭🇰）', uptime: '99.93%', lastCheck: '23m ago', status: 'up' },
-            { name: 'Koyeb（🇺🇸）', uptime: '99.93%', lastCheck: '22m ago', status: 'up' },
-            { name: 'Hugging Face（🇺🇸）', uptime: '100%', lastCheck: '21m ago', status: 'up' },
-            { name: 'SAP (🇸🇬)', uptime: '99.38%', lastCheck: '22m ago', status: 'up' }
-          ]
-        };
-        resolve(mockData);
-      }, 500);
-    });
-  }
-
-  async updateStatus() {
-    const refreshBtn = document.getElementById('refreshStatus');
-    const refreshIcon = refreshBtn.querySelector('.refresh-icon');
-    
-    refreshBtn.classList.add('loading');
-    
-    const data = await this.fetchStatus();
-    
-    if (data) {
-      this.statusData = data;
-      this.lastUpdate = new Date();
-      this.renderStatusPanel();
-    }
-    
-    refreshBtn.classList.remove('loading');
-    
-    // 显示更新时间
-    const lastUpdateTime = document.getElementById('lastUpdateTime');
-    if (this.lastUpdate) {
-      lastUpdateTime.textContent = this.lastUpdate.toLocaleTimeString('zh-CN');
-    }
-  }
-
-  renderStatusPanel() {
-    const statusGrid = document.getElementById('statusGrid');
-    
-    if (!this.statusData || !this.statusData.monitors) {
-      statusGrid.innerHTML = '<div class="status-error">无法加载状态数据</div>';
-      return;
-    }
-
-    const statusCards = this.statusData.monitors.map(monitor => {
-      const statusClass = monitor.status === 'up' ? 'up' : 'down';
-      return `
-        <div class="status-card">
-          <div class="status-indicator ${statusClass}"></div>
-          <div class="status-info-content">
-            <div class="status-name">${monitor.name}</div>
-            <div class="status-details">正常运行时间: ${monitor.uptime}</div>
-          </div>
-          <div class="status-time">${monitor.lastCheck}</div>
-        </div>
-      `;
-    }).join('');
-
-    statusGrid.innerHTML = statusCards;
-  }
-
-  startAutoRefresh(interval = 60000) {
-    setInterval(() => {
-      this.updateStatus();
-    }, interval);
-  }
-}
-
 // ========== 主题切换 ==========
 const themeToggle = document.getElementById('themeToggle');
 themeToggle.addEventListener('click', () => {
@@ -1016,28 +633,24 @@ function performSearch() {
   const visibleDetails = new Set();
   
   if (!query) {
-    // 清空搜索，显示所有卡片和分类
     toolCards.forEach(card => card.classList.remove('hidden'));
     detailsElements.forEach(detail => detail.style.display = '');
     noResults.style.display = 'none';
     return;
   }
   
-  // 搜索工具卡片
   toolCards.forEach(card => {
     const text = card.innerText.toLowerCase();
     const isMatch = text.includes(query);
     if (isMatch) {
       card.classList.remove('hidden');
       visibleCount++;
-      // 记录包含匹配卡片的分类
       visibleDetails.add(card.closest('details'));
     } else {
       card.classList.add('hidden');
     }
   });
   
-  // 控制分类的显示/隐藏
   detailsElements.forEach(detail => {
     if (!query || visibleDetails.has(detail)) {
       detail.style.display = '';
@@ -1046,67 +659,16 @@ function performSearch() {
     }
   });
   
-  // 显示/隐藏无结果提示
   noResults.style.display = visibleCount === 0 ? 'block' : 'none';
 }
 
-// ========== Favicon加载 ==========
-document.querySelectorAll('.tool-icon').forEach(icon => {
-  const link = icon.closest('a');
-  if (!link) return;
-  let url;
-  try {
-    url = new URL(link.href).origin + '/favicon.ico';
-  } catch {
-    return;
-  }
-  const img = document.createElement('img');
-  img.src = url;
-  img.alt = '';
-  img.onload = () => {
-    icon.textContent = '';
-    icon.appendChild(img);
-  };
-});
-
 // ========== 页面初始化 ==========
 window.addEventListener('DOMContentLoaded', () => {
-  // 加载保存的主题
   const savedTheme = localStorage.getItem('uv-theme');
   if (savedTheme) {
     document.body.setAttribute('data-theme', savedTheme);
     themeToggle.textContent = savedTheme === 'light' ? '🌙' : '☀️';
   }
-  
-  // 初始化状态监控
-  const statusMonitor = new StatusMonitor();
-  document.getElementById('refreshStatus').addEventListener('click', () => {
-    statusMonitor.updateStatus();
-  });
-  
-  // 首次加载状态
-  statusMonitor.updateStatus();
-  
-  // 开始自动刷新
-  statusMonitor.startAutoRefresh(60000);
-  
-  // 初始更新时间显示
-  const now = new Date();
-  document.getElementById('lastUpdateTime').textContent = now.toLocaleTimeString('zh-CN');
-  
-  // 添加折叠/展开所有功能
-  document.addEventListener('keydown', (e) => {
-    // Alt+A 折叠所有分类
-    if (e.altKey && e.key === 'a') {
-      e.preventDefault();
-      detailsElements.forEach(detail => detail.open = false);
-    }
-    // Alt+S 展开所有分类
-    if (e.altKey && e.key === 's') {
-      e.preventDefault();
-      detailsElements.forEach(detail => detail.open = true);
-    }
-  });
 });
 </script>
 </body>
