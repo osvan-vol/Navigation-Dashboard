@@ -48,6 +48,7 @@ header {
   margin:0 auto;
   display:flex;
   align-items:center;
+  justify-content:space-between;
   gap:20px;
 }
 
@@ -56,6 +57,8 @@ header {
   display:flex;
   align-items:center;
   gap:12px;
+  min-width:0;
+  flex-shrink:0;
 }
 .title-section h1 {
   font-size:clamp(20px, 3vw, 26px);
@@ -65,6 +68,7 @@ header {
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
+  white-space:nowrap;
 }
 
 /* 搜索和切换按钮区域 */
@@ -74,13 +78,14 @@ header {
   gap:12px;
   flex:1;
   max-width:600px;
+  justify-content:flex-end;
 }
 
 /* 搜索框 */
 .search { 
   position:relative; 
   flex:1;
-  min-width:0;
+  max-width:400px;
 }
 .search input {
   width:100%;
@@ -153,6 +158,32 @@ main {
   max-width:1200px; 
   margin:0 auto; 
   padding:20px; 
+}
+
+/* 站长精选 */
+.featured-section {
+  margin-bottom:28px;
+}
+.featured-header {
+  text-align:center;
+  margin-bottom:20px;
+}
+.featured-header h2 {
+  font-size:clamp(20px, 3vw, 26px);
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:8px;
+}
+.featured-header p {
+  font-size:clamp(13px, 1.5vw, 15px);
+  color:var(--muted);
+  max-width:500px;
+  margin:0 auto;
+}
+.featured-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+  gap:16px;
 }
 
 /* 可折叠分类 */
@@ -294,12 +325,18 @@ footer {
   
   .header-controls {
     max-width:none;
+    justify-content:stretch;
+  }
+  
+  .search {
+    max-width:none;
   }
   
   main {
     padding:16px;
   }
   
+  .featured-grid,
   .tools-grid {
     grid-template-columns:1fr;
   }
@@ -339,6 +376,44 @@ footer {
 </header>
 
 <main>
+  <!-- 站长精选 -->
+  <section class="featured-section">
+    <div class="featured-header">
+      <h2>⭐ 站长精选</h2>
+      <p>最常用、最核心的工具推荐</p>
+    </div>
+    <div class="featured-grid">
+      <a class="tool-card" href="https://chat.openai.com" target="_blank" data-title="ChatGPT" data-desc="日常必开，写代码、文案、查询资料">
+        <div class="tool-icon">C</div>
+        <div class="tool-info">
+          <div class="tool-name">ChatGPT</div>
+          <div class="tool-desc">日常必开，写代码、文案、查询资料</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://dash.cloudflare.com" target="_blank" data-title="Cloudflare" data-desc="CDN+DNS+防护，一站式网络基础设施">
+        <div class="tool-icon">CF</div>
+        <div class="tool-info">
+          <div class="tool-name">Cloudflare</div>
+          <div class="tool-desc">CDN+DNS+防护，一站式网络基础设施</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://www.deepseek.com" target="_blank" data-title="DeepSeek" data-desc="AI 助手，代码与文案创作">
+        <div class="tool-icon">D</div>
+        <div class="tool-info">
+          <div class="tool-name">DeepSeek</div>
+          <div class="tool-desc">AI 助手，代码与文案创作</div>
+        </div>
+      </a>
+      <a class="tool-card" href="https://ayo.94v.net/status/sub" target="_blank" data-title="Uptime Kuma" data-desc="服务监控，实时状态检测">
+        <div class="tool-icon">U</div>
+        <div class="tool-info">
+          <div class="tool-name">Uptime Kuma</div>
+          <div class="tool-desc">服务监控，实时状态检测</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
   <!-- 论坛 & 社区 -->
   <details>
     <summary>📘 论坛 & 社区</summary>
