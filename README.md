@@ -1,30 +1,13 @@
-# 📌 Navigation Dashboard
+🧭 Navigation Dashboard
+一个现代化的、配置驱动的个人导航门户，专为开发者和技术团队设计，旨在聚合所有高频工具，打造统一、高效的起点。
 
-一个 **本地即可运行、JSON 配置化、支持暗色模式的个人导航面板**  
-用于聚合 **AI 平台 / 部署平台 / 监控 / 解码 / 域名管理** 等高频工具。
----
+✨ 核心特性
+⚙️ 配置即代码：所有导航链接和分类均通过结构化的 JSON 配置文件管理，无需修改源码，易于维护与分享。
 
-## 📂 内置分类
+🌓 深度主题支持：完美支持自动跟随系统暗色/亮色模式，并提供精细的手动切换控制。
 
-- 🤖 **AI 平台**  
-  ChatGPT / Gemini / Claude / DeepSeek …
+🚀 开箱即用：纯前端实现，支持静态部署，可在 GitHub Pages、Vercel 或任何 Web 服务器上零成本运行。
 
-- 🚀 **部署 / 平台**  
-  GitHub / Cloudflare / Render / Koyeb / Zeabur / ClawCloud / Leawlof …
+🔍 即时搜索：支持按名称、描述、关键词对海量工具进行模糊搜索，快速定位。
 
-- 📡 **监控 / 解码 / 检测**  
-  Uptime Kuma / CF Trace / DNSChecker / ProxyIP / Base64 …
-
-- 🌍 **域名 / DNS**  
-  DNSHe / GV.UY / DigitalPlat / L53 …
-
----
-
-## 🚀 使用方式
-
-### 本地运行（推荐）
-
-```bash
-git clone https://github.com/osvan-vol/Navigation-Dashboard.git
-cd Navigation-Dashboard
-open index.html
+🎨 现代化界面：基于 Vue 3 / React 等现代前端框架构建，拥有流畅的动画和响应式布局，适配从桌面到移动端的各种设备。
