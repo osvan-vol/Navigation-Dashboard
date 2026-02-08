@@ -288,32 +288,6 @@ main {
   gap:20px;
 }
 
-/* 分类标题 */
-.category-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border);
-}
-.category-title h2 {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.category-title .category-count {
-  font-size: 13px;
-  color: var(--muted);
-  background: var(--border);
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: 600;
-}
-
 /* 可折叠分类 */
 details {
   background:var(--card);
@@ -778,11 +752,11 @@ footer::before {
           <button class="tool-action info-btn" data-tool="ChatGPT"><i class="fas fa-info"></i></button>
         </div>
       </a>
-      <a class="tool-card favorite" href="https://github.com" target="_blank" data-title="Cloudflare" data-desc="全球最大代码托管平台" data-category="应用容器">
+      <a class="tool-card favorite" href="https://dash.cloudflare.com" target="_blank" data-title="Cloudflare" data-desc="CDN+DNS+防护，一站式网络基础设施" data-category="应用容器">
         <div class="tool-icon"><i class="fas fa-cloud"></i></div>
         <div class="tool-info">
           <div class="tool-name">Cloudflare <span class="favorite-icon"><i class="fas fa-star"></i></span></div>
-          <div class="tool-desc"全球最大代码托管平台</div>
+          <div class="tool-desc">CDN+DNS+防护，一站式网络基础设施</div>
         </div>
         <div class="tool-actions">
           <button class="tool-action favorite-btn" data-tool="Cloudflare"><i class="fas fa-star"></i></button>
@@ -800,22 +774,22 @@ footer::before {
           <button class="tool-action info-btn" data-tool="DeepSeek"><i class="fas fa-info"></i></button>
         </div>
       </a>
-      <a class="tool-card favorite" href="https://ayo.94v.net/status/sub" target="_blank" data-title="Uptime Kuma" data-desc="服务监控，实时状态检测" data-category="监控 / 解码 / 检测">
-        <div class="tool-icon"><i class="fas fa-heartbeat"></i></div>
+      <a class="tool-card favorite" href="https://github.com" target="_blank" data-title="GitHub" data-desc="全球最大代码托管与协作平台" data-category="应用容器">
+        <div class="tool-icon"><i class="fab fa-github"></i></div>
         <div class="tool-info">
-          <div class="tool-name">Uptime Kuma <span class="favorite-icon"><i class="fas fa-star"></i></span></div>
-          <div class="tool-desc">服务监控，实时状态检测</div>
+          <div class="tool-name">GitHub <span class="favorite-icon"><i class="fas fa-star"></i></span></div>
+          <div class="tool-desc">全球最大代码托管与协作平台</div>
         </div>
         <div class="tool-actions">
-          <button class="tool-action favorite-btn" data-tool="Uptime Kuma"><i class="fas fa-star"></i></button>
-          <button class="tool-action info-btn" data-tool="Uptime Kuma"><i class="fas fa-info"></i></button>
+          <button class="tool-action favorite-btn" data-tool="GitHub"><i class="fas fa-star"></i></button>
+          <button class="tool-action info-btn" data-tool="GitHub"><i class="fas fa-info"></i></button>
         </div>
       </a>
     </div>
   </section>
 
   <!-- 论坛 & 社区 -->
-  <details open>
+  <details>
     <summary><i class="fas fa-comments"></i> 论坛 & 社区</summary>
     <div class="tools-grid">
       <a class="tool-card" href="https://linux.do/" target="_blank" data-title="linux.do" data-desc="Linux 技术讨论社区" data-category="论坛 & 社区">
@@ -958,7 +932,8 @@ footer::before {
           <div class="tool-desc">全球最大代码托管平台</div>
         </div>
         <div class="tool-actions">
-          <button class="tool-action favorite-btn" data-tool="GitHub"><i class="far fa-star"></i></button>
+          <button class="tool-action favorite-btn" data-tool="GitHub"><i class="fas fa-star"></i></button>
+          <button class="tool-action info-btn" data-tool="GitHub"><i class="fas fa-info"></i></button>
         </div>
       </a>
       <a class="tool-card" href="https://dash.cloudflare.com" target="_blank" data-title="Cloudflare" data-desc="CDN / 边缘计算 / 部署" data-category="应用容器">
@@ -1186,7 +1161,7 @@ footer::before {
 
 <script>
 // ========== 全局变量 ==========
-let favorites = JSON.parse(localStorage.getItem('uv-favorites')) || ['ChatGPT', 'Cloudflare', 'DeepSeek', 'Uptime Kuma'];
+let favorites = JSON.parse(localStorage.getItem('uv-favorites')) || ['ChatGPT', 'Cloudflare', 'DeepSeek', 'GitHub'];
 
 // ========== 主题切换 ==========
 const themeToggle = document.getElementById('themeToggle');
@@ -1474,7 +1449,7 @@ window.addEventListener('scroll', () => {
   if (window.scrollY > 300) {
     scrollTopBtn.style.display = 'flex';
   } else {
-    scrollTopBtn.style.display = 'flex'; // 总是显示
+    scrollTopBtn.style.display = 'flex';
   }
 });
 </script>
