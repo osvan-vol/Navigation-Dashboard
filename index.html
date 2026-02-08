@@ -119,8 +119,8 @@ header {
   white-space:nowrap;
 }
 
-/* 统计数据 */
-.stats {
+/* 统计数据 - 已删除 */
+/* .stats {
   display: flex;
   gap: 16px;
   font-size: 13px;
@@ -133,7 +133,7 @@ header {
 }
 .stat-item i {
   font-size: 12px;
-}
+} */
 
 /* 搜索和切换按钮区域 */
 .header-controls {
@@ -154,7 +154,7 @@ header {
 .search input {
   width:100%;
   height:44px;
-  padding:0 70px 0 44px;
+  padding:0 50px 0 44px;
   border-radius:14px;
   border:1.5px solid var(--border);
   background:var(--card);
@@ -179,7 +179,7 @@ header {
 }
 .search .clear {
   position:absolute;
-  right:46px;
+  right:14px;
   top:50%;
   transform:translateY(-50%);
   cursor:pointer;
@@ -201,21 +201,6 @@ header {
   color: var(--text);
 }
 .search input:not(:placeholder-shown) ~ .clear { display:flex;}
-.search .hint {
-  position:absolute;
-  right:12px;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:12px;
-  color:var(--muted);
-  background: rgba(0,0,0,0.05);
-  border-radius:8px;
-  padding:4px 8px;
-  font-weight: 500;
-}
-[data-theme="dark"] .search .hint {
-  background: rgba(255,255,255,0.1);
-}
 
 .theme-toggle {
   cursor:pointer;
@@ -699,10 +684,7 @@ footer::before {
     padding:16px;
   }
   
-  .stats {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+  /* 已删除 .stats 相关样式 */
 }
 </style>
 </head>
@@ -714,11 +696,7 @@ footer::before {
       <div class="logo">UV</div>
       <div>
         <h1>🧰 UV 工具箱</h1>
-        <div class="stats">
-          <div class="stat-item"><i class="fas fa-tools"></i> <span id="totalTools">38</span> 工具</div>
-          <div class="stat-item"><i class="fas fa-layer-group"></i> <span id="totalCategories">7</span> 分类</div>
-          <div class="stat-item"><i class="fas fa-star"></i> <span id="favoritesCount">4</span> 收藏</div>
-        </div>
+        <!-- 已删除统计数据区域 -->
       </div>
     </div>
     <div class="header-controls">
@@ -726,7 +704,6 @@ footer::before {
         <div class="search-icon"><i class="fas fa-search"></i></div>
         <input id="searchInput" placeholder="搜索工具或服务…" />
         <button class="clear" id="clearBtn"><i class="fas fa-times"></i></button>
-        <div class="hint">⌘K</div>
       </div>
       <div class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></div>
     </div>
@@ -1261,9 +1238,9 @@ function updateFavorites() {
     }
   });
   
-  // 更新收藏数量
-  const favoritesCount = document.getElementById('favoritesCount');
-  favoritesCount.textContent = favorites.length;
+  // 更新收藏数量 - 已删除相关DOM元素
+  // const favoritesCount = document.getElementById('favoritesCount');
+  // favoritesCount.textContent = favorites.length;
   
   localStorage.setItem('uv-favorites', JSON.stringify(favorites));
 }
@@ -1375,9 +1352,11 @@ function updateStats() {
   const totalTools = document.querySelectorAll('.tool-card').length;
   const totalCategories = document.querySelectorAll('details').length;
   
-  document.getElementById('totalTools').textContent = totalTools;
-  document.getElementById('totalCategories').textContent = totalCategories;
-  document.getElementById('favoritesCount').textContent = favorites.length;
+  // 已删除相关DOM元素
+  // document.getElementById('totalTools').textContent = totalTools;
+  // document.getElementById('totalCategories').textContent = totalCategories;
+  // document.getElementById('favoritesCount').textContent = favorites.length;
+  
   document.getElementById('footerToolCount').textContent = totalTools;
   document.getElementById('footerCategoryCount').textContent = totalCategories;
   
