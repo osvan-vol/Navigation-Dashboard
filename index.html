@@ -600,13 +600,13 @@ footer::before {
 </main>
 <div class="quick-access"><button class="quick-btn" id="scrollTopBtn"><i class="fas fa-arrow-up"></i></button><button class="quick-btn secondary" id="showFavoritesBtn"><i class="fas fa-star"></i></button></div>
 <div class="modal" id="toolModal"><div class="modal-content"><div class="modal-header"><h3 id="modalToolName">工具名称</h3><button class="modal-close" id="closeModal"><i class="fas fa-times"></i></button></div><div class="modal-body"><p id="modalToolDesc">工具描述</p><div class="modal-stats"><div class="stat-box"><div class="stat-value" id="modalCategoryCount">7</div><div class="stat-label">分类数量</div></div><div class="stat-box"><div class="stat-value" id="modalToolCount">0</div><div class="stat-label">工具总数</div></div></div></div></div></div>
-<footer><p>© 2024 UV 工具箱 · 专业版 | 一站式运维工具导航平台</p><p style="margin-top:8px; font-size:13px;">已收录 <span id="footerToolCount">0</span> 个工具， <span id="footerCategoryCount">0</span> 个分类</p></footer>
+<footer><p>©  UV 工具箱 · 专业版 | 一站式运维工具导航平台</p><p style="margin-top:8px; font-size:13px;">已收录 <span id="footerToolCount">0</span> 个工具， <span id="footerCategoryCount">0</span> 个分类</p></footer>
 <script>
 // 分类体系：完全按照需求重组 (删除AI平台, 增加监控BetterStack, 论坛加入博客, 域名dns调整链接, 应用容器删除zeabur加入railway, 监控/解码/检测拆分为:检测工具、加密解码、代理工具)
 const categoriesData = [
   { name: "📡 监控与状态", icon: "fa-chart-line", tools: [
     { name: "Better Stack", url: "https://betterstack.com/", desc: "一站式监控与状态", iconHtml: "<i class='fas fa-chart-simple'></i>" },
-    { name: "UNCLE Status", url: "https://ayo.94v.net/status/sub", desc: "UVMonitors", iconHtml: "<i class='fas fa-heartbeat'></i>" }
+    { name: "UNCLE Status", url: "https://vay.re.mw/", desc: "UVMonitors", iconHtml: "<i class='fas fa-heartbeat'></i>" }
   ]},
   { name: "💬 论坛 & 社区", icon: "fa-comments", tools: [
     { name: "linux.do", url: "https://linux.do/", desc: "Linux 技术讨论社区", iconHtml: "<i class='fab fa-linux'></i>" },
@@ -655,7 +655,7 @@ const categoriesData = [
 
 // 站长精选: 将 Railway 更名为 ChatGPT，链接改为 https://chatgpt.com/ ，其他保持不变
 const featuredTools = [
-  { name: "UVMonitors", url: "https://ayo.94v.net/status/sub", desc: "一站式监控与状态页面", iconHtml: "<i class='fas fa-chart-simple'></i>" },
+  { name: "UVMonitors", url: "https://vay.re.mw/", desc: "一站式监控与状态页面", iconHtml: "<i class='fas fa-chart-simple'></i>" },
   { name: "Cloudflare", url: "https://dash.cloudflare.com", desc: "CDN+DNS+防护，一站式网络基础设施", iconHtml: "<i class='fas fa-cloud'></i>" },
   { name: "GitHub", url: "https://github.com", desc: "全球最大代码托管与协作平台", iconHtml: "<i class='fab fa-github'></i>" },
   { name: "ChatGPT", url: "https://chatgpt.com/", desc: "OpenAI 官方AI助手，代码与文案创作", iconHtml: "<i class='fas fa-robot'></i>" }
